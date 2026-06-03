@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local"
 import Header from "./components/header";
+import Footer from "./components/footer";
 
 
 
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body className={vazirmatn.className}>
         <Header/>
         {children}
+        <Footer/>
       </body>
     </html>
   );
