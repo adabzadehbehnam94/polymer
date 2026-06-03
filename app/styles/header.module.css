@@ -1,0 +1,17 @@
+@font-face {
+  font-family: vazirR;
+  src: url("../../public/fonts/Vazirmatn-Thin.ttf");
+}
+
+.mainHeader a{
+    /* font-family: vazirR; */
+    font-size: 12px;
+}
+
+.greenButton{
+    font-size: 10px;
+}
+
+.greenButton svg{
+    font-size: 13px;
+}
