@@ -24,3 +24,12 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+/* my style */
+.bg-provider{
+  background-image: url(../public/pictures/background.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

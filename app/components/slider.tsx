@@ -40,7 +40,7 @@ export default function Slider() {
                                 <button className=" px-5 bg-black py-3 rounded-md text-[#87898f] border-2 border-[#87898f] text-sm hover:bg-[#3b9821] hover:border-[#3b9821] hover:text-white transition duration-300 delay-100 cursor-pointer">تماس با ما</button>
                             </div>  
 
-                            <Image src={background1} alt="slider" style={{ width: "100%", height: "fit-content" }} />
+                            <Image src={background1} loading="eager" alt="slider" style={{ width: "100%", height: "fit-content" }} />
                         </div>
                     </div>
 
@@ -53,7 +53,7 @@ export default function Slider() {
                                 <button className=" px-5 bg-black py-3 rounded-md text-[#87898f] border-2 border-[#87898f] text-sm hover:bg-[#3b9821] hover:border-[#3b9821] hover:text-white transition duration-300 delay-100 cursor-pointer">تماس با ما</button>
                             </div> 
 
-                            <Image src={background2} alt="slider" style={{ width: "100%", height: "fit-content" }} />
+                            <Image src={background2} loading="eager" alt="slider" style={{ width: "100%", height: "fit-content" }} />
                         </div>
                     </div>
 
