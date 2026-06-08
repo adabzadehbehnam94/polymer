@@ -7,6 +7,16 @@ import PE from "@/public/pictures/pe.png"
 import PVC from "@/public/pictures/pvc.png"
 import ABS from "@/public/pictures/abs.png"
 import ProductsCard from "./components/productsCard";
+import Services from "./components/services";
+import { IoEarthOutline } from "react-icons/io5";
+import { TfiHeadphoneAlt } from "react-icons/tfi";
+import { BsTruck } from "react-icons/bs";
+import { RiShipLine } from "react-icons/ri";
+
+
+
+
+
 
 export default function Home() {
   return (
@@ -30,6 +40,13 @@ export default function Home() {
           <Image className="ml-1" src={barg2} alt="barg" width={40} height={40} />
           <h3>خدمات ما</h3>
         </div>
+        <div className="flex justify-around">
+          <Services image={TfiHeadphoneAlt} title="واردات مواد اولیه" />
+          <Services image={BsTruck} title="واردات مواد اولیه" />
+          <Services image={RiShipLine} title="واردات مواد اولیه" />
+          <Services image={IoEarthOutline} title="واردات مواد اولیه" />
+        </div>
+
       </section>
     </div>
   );
