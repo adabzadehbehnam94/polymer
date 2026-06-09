@@ -13,7 +13,7 @@ interface Cards{
 export default function ProductsCard(props:Cards ){
     const router = useRouter()
     return(
-        <div className="flex w-40 gap-2 flex-col text-center justify-center bg-[#141b1a] text-white rounded-lg border-1 border-[#252b2a]">
+        <div className="flex  gap-2 flex-col text-center justify-center bg-[#141b1a] text-white rounded-lg border-1 border-[#252b2a]">
             <Image className="mx-auto" src={props.image} width={55} height={55} alt="product"/>
             <h3 className="text-sm">{props.title}</h3>
             <p className="px-2 text-xs text-[#87898f]">{props.stitle}</p>

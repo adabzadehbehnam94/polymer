@@ -1,6 +1,6 @@
 "use client"
 import Swiper from "swiper";
-import { Navigation, Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import "swiper/swiper.css";
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -13,18 +13,22 @@ import Image from "next/image";
 
 
 
+
 export default function Slider() {
 
     useEffect(() => {
         const swiper = new Swiper('.swiper', {
-            modules: [Navigation, Pagination],
-            loop : true,
-            autoplay:{
-                delay : 2000
+            modules: [Pagination],
+            autoplay: {
+                delay: 2000
+            },
+            pagination : {
+                el : ".swiper-pagination",
+                type :"bullets",
+                clickable: true
             }
+
         });
-
-
     }, [])
 
     return (
@@ -38,7 +42,7 @@ export default function Slider() {
                                 <p className="text-sm text-[#87898f] mb-5">تامین کننده انواع پلیمر های صنعتی , گرانول و کامیاند های پلیمری با استاندارد های جهانی</p>
                                 <button className="ml-5 bg-black px-5 py-3 text-[#87898f] rounded-md border-2 border-[#87898f] text-sm hover:bg-[#3b9821] hover:border-[#3b9821] hover:text-white transition duration-300 delay-100 cursor-pointer ">مشاهده محصولات</button>
                                 <button className=" px-5 bg-black py-3 rounded-md text-[#87898f] border-2 border-[#87898f] text-sm hover:bg-[#3b9821] hover:border-[#3b9821] hover:text-white transition duration-300 delay-100 cursor-pointer">تماس با ما</button>
-                            </div>  
+                            </div>
 
                             <Image src={background1} loading="eager" alt="slider" style={{ width: "100%", height: "fit-content" }} />
                         </div>
@@ -51,14 +55,16 @@ export default function Slider() {
                                 <p className="text-sm text-[#87898f] mb-5">تامین کننده انواع پلیمر های صنعتی , گرانول و کامیاند های پلیمری با استاندارد های جهانی</p>
                                 <button className="ml-5 bg-black px-5 py-3 text-[#87898f] rounded-md border-2 border-[#87898f] text-sm hover:bg-[#3b9821] hover:border-[#3b9821] hover:text-white transition duration-300 delay-100 cursor-pointer">مشاهده محصولات</button>
                                 <button className=" px-5 bg-black py-3 rounded-md text-[#87898f] border-2 border-[#87898f] text-sm hover:bg-[#3b9821] hover:border-[#3b9821] hover:text-white transition duration-300 delay-100 cursor-pointer">تماس با ما</button>
-                            </div> 
+                            </div>
 
                             <Image src={background2} loading="eager" alt="slider" style={{ width: "100%", height: "fit-content" }} />
                         </div>
                     </div>
 
                 </div>
-                <div className="swiper-scrollbar"></div>
+                <div className="swiper-pagination">
+
+                </div>
             </div>
         </div>
     )
