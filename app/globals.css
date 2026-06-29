@@ -27,10 +27,41 @@ body {
 
 
 /* my style */
-.bg-provider{
+.bg-provider {
   background-image: url(../public/pictures/background.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   padding-bottom: 80px;
+}
+
+.swiper-pagination {
+  bottom: 30px !important;
+}
+
+.swiper{
+  z-index: 0 !important;
+}
+
+.swiper .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  /* background:#777; */
+  background: #ffffff !important;
+  opacity: 1;
+  border-radius: 9999px;
+  transition: all .3s ease;
+  margin: 0 4px !important;
+}
+
+.swiper .swiper-pagination-bullet-active {
+  width: 28px;
+  background: white;
+  border-radius: 999px;
+}
+
+@media (max-width : 767px) {
+  .swiper-pagination {
+    bottom: 0 !important;
+  }
 }

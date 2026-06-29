@@ -3,6 +3,10 @@
     src: url("../../public/fonts/Vazirmatn-Thin.ttf");
 }
 
+.mainHeader{
+    z-index: 1;
+}
+
 .mainHeader a {
     /* font-family: vazirR; */
     font-size: 12px;
