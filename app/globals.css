@@ -28,7 +28,7 @@ body {
 
 /* my style */
 .bg-provider {
-  background-image: url(../public/pictures/background.png);
+  background-image: url(../public/images/pictures/background.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

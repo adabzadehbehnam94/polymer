@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"  
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id Int @id @default(1)
+  username String
+  firstname String
+  lastname String
+  email String?
+  password String
+}
+
+model Products {
+  id Int @id @default(autoincrement())
+  productName String
+  brand String?
+  application String?
+  details String?
+  price Int
+  categoryId Int
+  category Categories @relation(fields : [categoryId] , references : [id])
+}
+
+model Categories{
+  id Int @id @default(autoincrement())
+  name String
+  application String?
+  image String?
+  products Products[]
+  articles Articles[]
+  aboutUs AboutUs?
+}
+
+model Setting {
+  id Int @id @default(1)
+  name String
+  detail String?
+  logo String
+  address String
+  phone String
+  email String?
+  workingHours String?
+}
+
+
+
+model AboutUs{
+  id Int @id @default(1)
+  title String
+  content String @db.LongText
+  supportType String?
+  productDiversity Int? @unique
+  activeCustomers Int?
+  yearsOfExperience Int?
+  categories Categories? @relation(fields : [productDiversity], references : [id])
+}
+
+
+model Messages {
+  id Int @id @default(autoincrement())
+  name String?
+  phone String?
+  email String?
+  messageSubject String
+  messageText String
+}
+
+model Customers{
+  id Int @id @default(autoincrement())
+  name String
+  mobile String
+  address String? @db.LongText
+  email String?
+}
+
+model Articles{
+  id Int @id @default(autoincrement())
+  title String
+  slug String
+  summary String 
+  content String @db.LongText
+  image  String
+  author String
+  categoryId Int
+  category Categories@relation(fields : [categoryId] , references : [id])
+  isPublished Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  publishedAt DateTime?
+
+
+}
+

@@ -4,8 +4,8 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import "swiper/css";
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import background1 from "@/public/pictures/new_background_slider.png"
-import background2 from "@/public/pictures/new_background_slider2.png"
+import background1 from "@/public/images/pictures/new_background_slider.png"
+import background2 from "@/public/images/pictures/new_background_slider2.png"
 
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react"

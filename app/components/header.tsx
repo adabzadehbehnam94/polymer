@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
-import logo from "@/public/pictures/logo menu.png"
-import hambergerIcon from "@/public/pictures/hamberger_menu.png"
+import logo from "@/public/images/pictures/logo menu.png"
+import hambergerIcon from "@/public/images/pictures/hamberger_menu.png"
 import Image from "next/image";
 import { IoIosCall } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";

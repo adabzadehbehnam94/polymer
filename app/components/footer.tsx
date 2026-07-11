@@ -1,7 +1,7 @@
-import logoFooter from "@/public/pictures/footerLogo.png"
-import rubika from "@/public/pictures/rubika_gray_new.png"
-import eitaa from "@/public/pictures/eitaa-icon-gray.png"
-import bale from "@/public/pictures/bale_white.png"
+import logoFooter from "@/public/images/pictures/footerLogo.png"
+import rubika from "@/public/images/pictures/rubika_gray_new.png"
+import eitaa from "@/public/images/pictures/eitaa-icon-gray.png"
+import bale from "@/public/images/pictures/bale_white.png"
 import Image from "next/image"
 import Link from "next/link"
 import { FaWhatsapp } from "react-icons/fa";
