@@ -58,7 +58,7 @@ interface PromisEditSetting {
     success?: string,
     error?: string,
     logoErr?: string,
-    errMobile? : string
+    errMobile?: string
     webNameErr?: string
 }
 
@@ -78,7 +78,7 @@ export async function registerAction(state: State, formdata: Formdata): Promise<
             mobileErr: "فیلد شماره موبایل اجباریست"
         }
     }
-    
+
 
 
     const data = await prisma.customers.create({
@@ -119,30 +119,30 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
     }
 
 
-    const fetchdata = await prisma.users.findUnique({where : {id : 1}})
-    
-    
+    const fetchdata = await prisma.users.findUnique({ where: { id: 1 } })
+
+
     if (fetchdata?.username === username) {
 
         // const matcher = fetchdata.find((item: Data) => item.email === email)
-        const hashedPassword = await bcrypt.compare(password , fetchdata!.password)
+        const hashedPassword = await bcrypt.compare(password, fetchdata!.password)
         if (hashedPassword) {
 
-                const cookie: { set: any } = await cookies()
-                cookie.set("name", fetchdata?.firstname)
-                
-                cookie.set({
-                    name: "user",
-                    value: fetchdata?.id,
-                    httpOnly: true
-                })
+            const cookie: { set: any } = await cookies()
+            cookie.set("name", fetchdata?.firstname)
+
+            cookie.set({
+                name: "user",
+                value: fetchdata?.id,
+                httpOnly: true
+            })
 
 
-                return {
-                    user: fetchdata?.firstname,
-                    logSuccess: `خوش آمدید ${fetchdata?.firstname}`
-                }
-            
+            return {
+                user: fetchdata?.firstname,
+                logSuccess: `خوش آمدید ${fetchdata?.firstname}`
+            }
+
         } else {
             return {
                 logError: "رمز عبور اشتباه است"
@@ -156,7 +156,7 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
     }
 }
 
-export const presentUser = async (): Promise<{ user?: string, category?: any, cookieError?: string, id?: string }> => {
+export const presentUser = async (): Promise<{ user?: string, cookieError?: string, id?: string ,name? : string }> => {
     const cookie = await cookies()
     const name = cookie.get("name")
     // const category = cookie.get("category")
@@ -180,7 +180,7 @@ export const logoutUser = async () => {
     const cookie = await cookies()
     cookie.delete("name")
     cookie.delete("user")
-    
+
 }
 
 
@@ -281,7 +281,7 @@ export async function editUser(state: State, formdata: Formdata): Promise<any> {
             mobileErr: "فیلد شماره موبایل نباید خالی باشد"
         }
     }
-    
+
 
     const result = await prisma.customers.update({
         where: { id: Number(id) },
@@ -436,22 +436,96 @@ export async function allCategories() {
 
 export async function categoryAction(state: any, formdata: any): Promise<any> {
     const name = formdata.get("name")
+    const application = formdata.get("application")
+    const image = formdata.get("image")
+    let urlImage
+
+    if (name === "") {
+        return {
+            nameErr: "نام دسته بندی نباید خالی باشد"
+        }
+    }
+
+    if (image instanceof File && image.size > 0) {
+        const byte = await image.arrayBuffer()
+        const buffer = Buffer.from(byte)
+
+        const uploudImage: any = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { folder: "categories" },
+                (error, result) => {
+                    if (error) reject(error)
+                    else resolve(result)
+                }
+            )
+
+            stream.end(buffer)
+        })
+
+        urlImage = uploudImage.secure_url
+    }else {
+        urlImage = ""
+    }
 
     const data = await prisma.categories.create({
         data: {
-            name: name
+            name: name,
+            application: application,
+            image: urlImage
         }
     })
+
+    if (data) {
+        return {
+            success: "دسته بندی جدید با موفقیت ایجاد شد"
+        }
+    } else {
+        return {
+            error: "دسته ایجاد نشد"
+        }
+    }
 }
 
 export async function categoryEditAction(state: any, formdata: any): Promise<any> {
     const name = formdata.get("name")
     const id = formdata.get("id")
+    const application = formdata.get("application")
+    const image = formdata.get("image")
+    let urlImage
+
+    if (name === "") {
+        return {
+            nameErr: "نام دسته بندی نباید خالی باشد"
+        }
+    }
+
+    if (image instanceof File && image.size > 0) {
+        const byte = await image.arrayBuffer()
+        const buffer = Buffer.from(byte)
+
+        const uploadImage: any = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { folder: "categories" },
+                (error, result) => {
+                    if (error) reject(error)
+                    else resolve(result)
+                }
+            )
+
+            stream.end(buffer)
+        })
+
+        urlImage = uploadImage.secure_url
+    } else {
+        urlImage = formdata.get("oldImage")
+    }
 
     const data = await prisma.categories.update({
         where: { id: Number(id) },
         data: {
-            name: name
+            name: name,
+            application: application,
+            image: urlImage
         }
     })
 
@@ -473,164 +547,164 @@ export async function categoryDeleteAction(id: number) {
     })
 }
 
-// export async function importWebDetail(state: StateSetting, formdata: Formdata) {
-//     const name = formdata.get("name")
-//     const detail = formdata.get("detail")
-//     const logo = formdata.get("logo")
-//     const address = formdata.get("address")
-//     const mobile = formdata.get("mobile")
-//     const email = formdata.get("email")
+export async function importWebDetail(state: StateSetting, formdata: Formdata) {
+    const name = formdata.get("name")
+    const detail = formdata.get("detail")
+    const logo = formdata.get("logo")
+    const address = formdata.get("address")
+    const phone = formdata.get("phone")
+    const email = formdata.get("email")
 
-//     if (name === "") {
-//         return {
-//             ...state,
-//             errName: "نام شرکت نباید خالی باشد"
-//         }
-//     }
-//     if (logo === null) {
-//         return {
-//             ...state,
-//             errLogo: "لطفا لوگو شرکت را وارد کنید",
-//         }
-//     }
-//     if (address === "") {
-//         return {
-//             ...state,
-//             errAddress: "فیلد آدرس نباید خالی باشد",
-//         }
-//     }
+    if (name === "") {
+        return {
+            ...state,
+            errName: "نام شرکت نباید خالی باشد"
+        }
+    }
+    if (logo === null) {
+        return {
+            ...state,
+            errLogo: "لطفا لوگو شرکت را وارد کنید",
+        }
+    }
+    if (address === "") {
+        return {
+            ...state,
+            errAddress: "فیلد آدرس نباید خالی باشد",
+        }
+    }
 
-//     if (mobile === "") {
-//         return {
-//             ...state,
-//             errMobile: "فیلد شماره موبایل نباید خالی باشد"
-//         }
-//     }
-
-    
-
-//     const byte = await logo.arrayBuffer()
-//     const buffer = Buffer.from(byte)
-
-//     const uploadLogo : any = await new Promise((resolve , reject)=>{
-//         const stream = cloudinary.uploader.upload_stream(
-//             {folder : "logo"},
-//             (error , result)=>{
-//                 if(error) reject(error)
-//                     else resolve(result)
-//             }
-//         )
-//         stream.end(buffer)
-//     })
+    if (phone === null) {
+        return {
+            ...state,
+            errMobile: "فیلد شماره موبایل نباید خالی باشد"
+        }
+    }
 
 
-//     const cookie = await cookies()
-//     const userId = cookie.get("user")?.value
+
+    const byte = await logo.arrayBuffer()
+    const buffer = Buffer.from(byte)
+
+    const uploadLogo: any = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            { folder: "logo" },
+            (error, result) => {
+                if (error) reject(error)
+                else resolve(result)
+            }
+        )
+        stream.end(buffer)
+    })
 
 
-//     const dataSetting = await prisma.setting.create({
-//         data: {
-//             webName: name,
-//             detail: detail,
-//             logo: uploadLogo.secure_url,
-//             email: email,
-//             address: address,
-//             mobile: mobile,
-//             userId: Number(userId)
-//         }
-//     })
-
-//     if (dataSetting) {
-//         return {
-//             ...state,
-//             success: "اطلاعت سایت با موفقیت ثبت شد"
-//         }
-//     } else {
-//         return {
-//             ...state,
-//             error: "ثبت اطلاعات انجام نشد"
-//         }
-//     }
-
-// }
-
-// export async function editWebSetting(state: StateSetting, formdata: Formdata): Promise<PromisEditSetting> {
-//     const id = formdata.get("id")
-//     const logo = formdata.get("logo")
-//     const webName = formdata.get("webName")
-//     const detail = formdata.get("detail")
-//     const address = formdata.get("address")
-//     const mobile = formdata.get("mobile")
-//     const email = formdata.get("email")
-
-//     if (logo === null) {
-//         return {
-//             logoErr: "لوگو نباید خالی باشد"
-//         }
-//     }
-
-//     if (webName === "") {
-//         return {
-//             webNameErr: "نام شرکت نباید خالی باشد"
-//         }
-//     }
-
-//     if (mobile === "") {
-//         return {
-//             errMobile: "فیلد شماره موبایل نباید خالی باشد"
-//         }
-//     }
-
-//     let logoUrl
-
-//     if (logo instanceof File && logo.size > 0) {
-//         const bytes = await logo.arrayBuffer()
-//         const buffer = Buffer.from(bytes)
-
-//         const uploadImage: any = await new Promise((resolve, reject) => {
-//             const stream = cloudinary.uploader.upload_stream(
-//                 { folder: "logo" },
-//                 (error, result) => {
-//                     if (error) reject(error)
-//                     else resolve(result)
-//                 }
-//             )
-
-//             stream.end(buffer)
-
-//         })
-
-//         logoUrl = uploadImage.secure_url
-//     } else {
-//         logoUrl = formdata.get("oldLogo")
-//     }
+    const cookie = await cookies()
+    const userId = cookie.get("user")?.value
 
 
-//     const data = await prisma.settings.update({
-//         where: { userId: Number(id) },
-//         data: {
-//             logo: logoUrl,
-//             webName: webName,
-//             detail: detail,
-//             mobile : mobile,
-//             email : email,
-//             address : address
-//         }
-//     })
+    const dataSetting = await prisma.setting.create({
+        data: {
+            name: name,
+            detail: detail,
+            logo: uploadLogo.secure_url,
+            email: email,
+            address: address,
+            phone: phone,
+            userId: Number(userId)
+        }
+    })
 
-//     if (data) {
-//         return {
-//             success: "ویرایش با موفقیت ثبت شد"
-//         }
-//     } else {
-//         return {
-//             error: "ویرایش انجام نشد"
-//         }
-//     }
-// }
+    if (dataSetting) {
+        return {
+            ...state,
+            success: "اطلاعت سایت با موفقیت ثبت شد"
+        }
+    } else {
+        return {
+            ...state,
+            error: "ثبت اطلاعات انجام نشد"
+        }
+    }
 
-export async function presentSetting(id: number) {
-    const data = await prisma.setting.findUnique({ where: { id: id } })
+}
+
+export async function editWebSetting(state: StateSetting, formdata: Formdata): Promise<PromisEditSetting> {
+    const id = formdata.get("id")
+    const logo = formdata.get("logo")
+    const name = formdata.get("name")
+    const detail = formdata.get("detail")
+    const address = formdata.get("address")
+    const phone = formdata.get("phone")
+    const email = formdata.get("email")
+
+    if (logo === null) {
+        return {
+            logoErr: "لوگو نباید خالی باشد"
+        }
+    }
+
+    if (name === "") {
+        return {
+            webNameErr: "نام شرکت نباید خالی باشد"
+        }
+    }
+
+    if (phone === null) {
+        return {
+            errMobile: "فیلد شماره موبایل نباید خالی باشد"
+        }
+    }
+
+    let logoUrl
+
+    if (logo instanceof File && logo.size > 0) {
+        const bytes = await logo.arrayBuffer()
+        const buffer = Buffer.from(bytes)
+
+        const uploadImage: any = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { folder: "logo" },
+                (error, result) => {
+                    if (error) reject(error)
+                    else resolve(result)
+                }
+            )
+
+            stream.end(buffer)
+
+        })
+
+        logoUrl = uploadImage.secure_url
+    } else {
+        logoUrl = formdata.get("oldLogo")
+    }
+
+
+    const data = await prisma.setting.update({
+        where: { id: Number(id) },
+        data: {
+            logo: logoUrl,
+            name: name,
+            detail: detail,
+            phone: phone,
+            email: email,
+            address: address
+        }
+    })
+
+    if (data) {
+        return {
+            success: "ویرایش با موفقیت ثبت شد"
+        }
+    } else {
+        return {
+            error: "ویرایش انجام نشد"
+        }
+    }
+}
+
+export async function presentSetting() {
+    const data = await prisma.setting.findUnique({ where: { id: 1 } })
     return data
 }
 

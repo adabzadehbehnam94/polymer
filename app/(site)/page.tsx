@@ -1,13 +1,13 @@
 import Image from "next/image";
-import Slider from "./components/slider";
+import Slider from "../components/slider";
 import barg from "@/public/images/pictures/product_section_icon.png"
 import barg2 from "@/public/images/pictures/barg_transparent.png"
 import PP from "@/public/images/pictures/pp.png"
 import PE from "@/public/images/pictures/pe.png"
 import PVC from "@/public/images/pictures/pvc.png"
 import ABS from "@/public/images/pictures/abs.png"
-import ProductsCard from "./components/productsCard";
-import Services from "./components/services";
+import ProductsCard from "../components/productsCard";
+import Services from "../components/services";
 import { IoEarthOutline } from "react-icons/io5";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { BsTruck } from "react-icons/bs";

@@ -4,7 +4,7 @@ import WebSetting from "./websetting";
 import { ParamsId } from "../products/[id]/page";
 import { cookies } from "next/headers";
 import { useContext } from "react";
-import ContextUser, { VAl } from "@/components/Contex";
+import ContextUser, { VAl } from "@/app/components/Contex";
 import Link from "next/link";
 
 interface ParamsSetting{
@@ -20,8 +20,8 @@ export default async function Setting() {
 
     
     
-    const web = await prisma.settings.findUnique({where : {userId : Number(user?.value)}})
-    const userProfile = await prisma.users.findUnique({where : {id : Number(user?.value)}})
+    const web = await prisma.setting.findUnique({where : {id : 1}})
+    const userProfile = await prisma.users.findUnique({where : {id : 1}})
     // console.log(typeof(user?.value));
     
     
@@ -31,7 +31,7 @@ export default async function Setting() {
                 <ProfileSetting admin={userProfile!}/>
             </div>
             <div>
-                {web ? <WebSetting webDetail={web!} /> : <Link href={"/dashboard/setting/importWebSetting"}>تنظیمات سایت</Link>}
+                {web ? <WebSetting webDetail={web} /> : <Link href={"/dashboard/setting/importWebSetting"}>تنظیمات سایت</Link>}
             </div>
         </div>
     )

@@ -3,6 +3,7 @@ import "./globals.css";
 import localFont from "next/font/local"
 import Header from "./components/header";
 import Footer from "./components/footer";
+import { Contex } from "./components/Contex";
 
 
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const vazirmatn = localFont({
-  src : "../public/fonts/Vazirmatn-Medium.ttf"
+  src: "../public/fonts/Vazirmatn-Medium.ttf"
 })
 
 export default function RootLayout({
@@ -24,12 +25,14 @@ export default function RootLayout({
     <html
       lang="fa"
       dir="rtl"
-      className= "h-full antialiased"
+      className="h-full antialiased"
     >
       <body className={vazirmatn.className}>
-        <Header/>
-        {children}
-        <Footer/>
+        <Contex>
+          
+          {children}
+          <Footer />
+        </Contex>
       </body>
     </html>
   );

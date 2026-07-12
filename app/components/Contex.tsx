@@ -53,9 +53,9 @@ export function Contex({children} : Child){
         const me = async ()=>{
             const cookie = await presentUser()
             if(cookie){    
-                setuser(cookie.user)
-                setCategory(cookie.category)
-                setId(cookie.id)
+                setuser(cookie.name)
+                // setCategory(cookie.category)
+                setId(cookie.user)
                 
             }
         }

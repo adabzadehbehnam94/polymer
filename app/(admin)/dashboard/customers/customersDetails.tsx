@@ -4,24 +4,24 @@ import { useState } from "react"
 import localFont from "next/font/local"
 
 interface Customresdata {
-    customers: {
+    customersData: {
         id: number,
         name: string,
-        mobile? : string,
-        address? : string
+        mobile? : string | null,
+        address? : string | null
         
     }[]
 }
 
 const faNumber = localFont({
-    src : "../../../public/fonts/IRANSansWeb_FaNum.woff2"
+    src : "../../../../public/fonts/IRANSansWeb_FaNum.woff2"
 })
 
-export default function UsersDetails({ customers }: Customresdata) {
+export default function CustomersDetails({ customersData }: Customresdata) {
 
     const [search, setsearch] = useState("")
 
-    const filter = customers?.filter((item: { name: string }) => {
+    const filter = customersData?.filter((item: { name: string }) => {
         const word = item.name.split('')
         const word2 = word[0] + word[1]
         return word[0] === search || word2 === search || item.name === search
@@ -31,23 +31,23 @@ export default function UsersDetails({ customers }: Customresdata) {
         <>
             <div className="grid sm:grid-cols-2">
                 <div className="order-last sm:order-first mb-5">
-                    <p className={`text-blue-500 ${faNumber.className}`}>تعداد مشتریان : {customers.length}</p>
+                    <p className={`text-blue-500 ${faNumber.className}`}>تعداد مشتریان : {customersData.length}</p>
                     <br />
-                    {search === "" && customers.length === 0 && <p>مشتری وجود ندارد</p>}
+                    {search === "" && customersData.length === 0 && <p>مشتری وجود ندارد</p>}
                     {search === "" ?
-                        customers?.map((item: { id: number, name: string, address?: string , mobile? : string}) => (
+                        customersData?.map((item: { id: number, name: string, address?: string | null , mobile? : string | null}) => (
                             <Link href={`/dashboard/customers/${item.id}`} className="flex flex-row mb-3 w-[fit-content]" key={item.id}>
                                 <div className="ml-2">{item.name}</div>
-                                {/* <div>{item.lastname}</div> */}
+                                
                             </Link>
                         ))
 
                         :
 
-                        filter?.map((item: { id: number, name: string, address?: string , mobile? : string}) => (
+                        filter?.map((item: { id: number, name: string, address?: string | null , mobile? : string | null}) => (
                             <Link href={`/dashboard/users/${item.id}`} className="flex flex-row mb-3 w-[fit-content]" key={item.id}>
                                 <div className="ml-2">{item.name}</div>
-                                {/* <div>{item.lastName}</div> */}
+                                
                             </Link>
                         ))
                     }

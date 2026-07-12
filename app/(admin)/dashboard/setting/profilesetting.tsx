@@ -1,5 +1,5 @@
 "use client"
-import { editUser } from "@/components/serverAction"
+import { editUser } from "@/app/components/serverAction"
 import { useRouter } from "next/navigation"
 import { useActionState, useEffect } from "react"
 import { toast, ToastContainer } from "react-toastify"
@@ -10,9 +10,9 @@ import { toast, ToastContainer } from "react-toastify"
 interface Admin{
     admin : {
         id : number
-        firstName : string,
-        lastName : string,
-        email : string,
+        firstname : string,
+        lastname : string,
+        email? : string | null,
         password : string
     }
 }
@@ -47,13 +47,13 @@ export default function ProfileSetting({admin} : Admin){
                 <form className="flex flex-col gap-2 "  action={profileAction}>
                     <input type="hidden" defaultValue={admin.id} name="id"/>
                     <label>نام : </label>
-                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.firstName} name="firstName"/>
+                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.firstname} name="firstName"/>
                     <br />
                     <label >نام خانوادگی : </label>
-                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.lastName} name="lastName"/>
+                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.lastname} name="lastName"/>
                     <br />
                     <label >ایمیل : </label>
-                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.email} name="email"/>
+                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.email ?? ""} name="email"/>
                     <br />
                     <label >رمز عبور : </label>
                     <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="password" defaultValue={admin.password} name="password"/>

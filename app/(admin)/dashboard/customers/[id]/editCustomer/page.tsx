@@ -1,4 +1,4 @@
-import { ParamsId } from "@/app/dashboard/products/[id]/page"
+import { ParamsId } from "@/app/(admin)/dashboard/products/[id]/page"
 import { prisma } from "@/lib/prisma"
 import EditUserForm from "./editCustomerPage"
 
