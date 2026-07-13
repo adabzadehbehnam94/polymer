@@ -1,19 +1,26 @@
 "use client"
 import { createContext, useEffect, useState } from "react"
-import { buyProduct, logoutUser,presentSetting, presentUser, removeProduct, removeUser } from "./serverAction"
+import { buyProduct,logoutUser,presentSetting, presentUser, removeProduct, removeUser } from "./serverAction"
 import { useRouter } from "next/navigation"
 
-
-interface Child {
-    children : React.ReactNode
+interface User{
+    
+    firstname : string | null
 }
+
+interface contextProps {
+    children : React.ReactNode,
+    initialUser : any
+}
+
+
 export interface VAl  {
     user : {user : string} | null,
     handleUser : (item : {user : string})=> void,
     logout : ()=> void,
     Remove : (id : number)=> void,
     category : {category : string} | null,
-    id : string | undefined,
+    id : string | undefined | null,
     buy : (id : {id : string},products : any )=> void,
     RemoveProduct : (id : number)=> void,
     web : WebDetail | null
@@ -33,37 +40,24 @@ interface WebDetail{
 
 const ContextUser = createContext<VAl | null>(null)
 
-export function Contex({children} : Child){
-    const [user , setuser] = useState<any | null >(null)
+export function Contex({children , initialUser} : contextProps){
+    const [user , setuser] = useState<any | null >(initialUser)
     const [web , setWeb] = useState <any | null>(null)
     const [category , setCategory] = useState<{category : string} | null >(null)
-    const [id , setId] = useState<string | undefined >(undefined)
+    const [id , setId] = useState<string | undefined | null>(undefined)
     const router =useRouter()
     const handleUser = (item : {user : string}) =>{
         setuser(item)
     }
 
-    const logout = () =>{
+    const logout = async () =>{
+        await logoutUser()
         setuser(null)
-        logoutUser()
+        setId(null)
         router.push("/")
     }
 
     
-    // useEffect(()=>{
-    //     const me = async ()=>{
-    //         const cookie = await presentUser()
-    //         if(cookie){    
-    //             setuser(cookie.user)
-    //             // setCategory(cookie.category)
-    //             setId(cookie.id)
-                
-    //         }
-    //     }
-
-    //     me()
-
-    // },[])
 
     useEffect(()=>{
 

@@ -109,7 +109,7 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
 
     if (username === "") {
         return {
-            emailErr: "فیلد نام کاربری اجباریست"
+            userErr: "فیلد نام کاربری اجباریست"
         }
     }
     if (password === "") {
@@ -128,6 +128,12 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
         const hashedPassword = await bcrypt.compare(password, fetchdata!.password)
         if (hashedPassword) {
 
+                const cookie : any = await cookies()
+                cookie.set({
+                    name : "session",
+                    value : String(fetchdata?.id),
+                    httpOnly : true
+                })
             
 
             return {
@@ -171,9 +177,8 @@ export const presentUser = async (): Promise<{ user?: string, cookieError?: stri
 
 export const logoutUser = async () => {
     const cookie = await cookies()
-    cookie.delete("name")
-    cookie.delete("user")
-
+    cookie.delete("session")
+    
 }
 
 

@@ -12,18 +12,17 @@ export default function Login(){
   const router = useRouter()
   const {loginUser} = useContext<VAl | any>(ContextUser)
   useEffect(()=>{
-    if(state?.emailErr){
-      toast.error(state.emailErr)
+    if(state?.userErr){
+      toast.error(state.userErr)
     }
     if(state?.passwordErr){
       toast.error(state.passwordErr)
     }
+
     if(state?.logError){
       toast.error(state.logError)
     }
-    if(state?.logPassword){
-      toast.error(state.logPassword)
-    }
+    
     if(state?.error){
       toast.error(state.error)
     }

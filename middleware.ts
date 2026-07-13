@@ -6,10 +6,10 @@ export function middleware(request: {
     cookies: any,
     get: string
 }) {
-    const cookie = request.cookies.get("name")
+    const session = request.cookies.get("session")
     // const category = request.cookies.get("user")
 
-    if (!cookie) {
+    if (!session) {
         return NextResponse.redirect(new URL("/", request.url))
     }
 }

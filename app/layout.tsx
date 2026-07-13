@@ -4,6 +4,8 @@ import localFont from "next/font/local"
 import Header from "./components/header";
 import Footer from "./components/footer";
 import { Contex } from "./components/Contex";
+import { cookies } from "next/headers";
+import { prisma } from "@/lib/prisma";
 
 
 
@@ -16,11 +18,38 @@ const vazirmatn = localFont({
   src: "../public/fonts/Vazirmatn-Medium.ttf"
 })
 
-export default function RootLayout({
+// const user = async () => {
+
+//   const data = 
+
+//   return data
+// }
+
+
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookie = await cookies()
+  const session = cookie.get("session")
+  // console.log(session);
+  let user
+
+  if (session) {
+    user = await prisma.users.findUnique({
+      where: { id: Number(session.value) },
+      select: {
+        firstname: true
+      }
+
+    })
+  }
+
+
+
+
   return (
     <html
       lang="fa"
@@ -28,8 +57,8 @@ export default function RootLayout({
       className="h-full antialiased"
     >
       <body className={vazirmatn.className}>
-        <Contex>
-          
+        <Contex initialUser={user?.firstname} >
+
           {children}
           <Footer />
         </Contex>
