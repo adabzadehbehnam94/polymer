@@ -44,10 +44,7 @@ export default function Topbar() {
                             <button onClick={mobile} className="sm:hidden ml-10"><Image alt="menu" width={30} height={30} src={menuMobile} /></button>
                             <Link className="ml-10 hidden sm:flex" href={"/dashboard/overview"}>{user}</Link>
                             <button type="button" className="cursor-pointer ml-10 hidden sm:flex" onClick={logout}>خروج</button>
-                            {/* <div className="relative">
-                                <Link href={"/card"}><Image alt="card" src={cart} width={30} height={30} /></Link>
-                                {selector.count > 0 && <p className="absolute -bottom-1  -left-2 bg-red-500 rounded-2xl px-2 text-sm">{selector.count.toLocaleString("fa-IR")}</p>}
-                            </div> */}
+                            
                         </div>
                         {/* <div>{web?.webName}</div> */}
                         {/* <div>
@@ -68,17 +65,14 @@ export default function Topbar() {
                         <div className="flex h-10 items-center">
                             <button onClick={mobile} className="sm:hidden ml-10  "><Image alt="menu" width={30} height={30} src={menuMobile} /></button>
                             <Link className="hidden sm:flex ml-10" href={"/login"}>ورود</Link>
-                            <Link className="hidden sm:flex ml-10" href={"/register"}>ثبت نام</Link>
-                            <div className="relative">
-                                <Link href={"/card"}><Image alt="card" src={cart} width={30} height={30} /></Link>
-                                {/* {selector.count > 0 && <p className="absolute -bottom-1  -left-2 bg-red-500 rounded-2xl px-2 text-sm">{selector.count.toLocaleString("fa-IR")}</p>} */}
-                            </div>
+                            
+                            
                         </div>
                     </header>
                     {open &&
                         <div className={`bg-blue-500 h-150 absolute ${open} right-0 top-20 w-40 pt-10`}>
                             <Link onClick={Out} className=" block mr-10 mb-5 text-white" href={"/login"}>ورود</Link>
-                            <Link onClick={Out} className="block mr-10 mb-5 text-white" href={"/register"}>ثبت نام</Link>
+                            
                         </div>
                     }
                 </>

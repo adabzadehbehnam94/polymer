@@ -17,6 +17,7 @@ export interface VAl  {
     buy : (id : {id : string},products : any )=> void,
     RemoveProduct : (id : number)=> void,
     web : WebDetail | null
+    loginUser : any | null
 
 }
 
@@ -49,26 +50,26 @@ export function Contex({children} : Child){
     }
 
     
-    useEffect(()=>{
-        const me = async ()=>{
-            const cookie = await presentUser()
-            if(cookie){    
-                setuser(cookie.name)
-                // setCategory(cookie.category)
-                setId(cookie.user)
+    // useEffect(()=>{
+    //     const me = async ()=>{
+    //         const cookie = await presentUser()
+    //         if(cookie){    
+    //             setuser(cookie.user)
+    //             // setCategory(cookie.category)
+    //             setId(cookie.id)
                 
-            }
-        }
+    //         }
+    //     }
 
-        me()
+    //     me()
 
-    },[user])
+    // },[])
 
     useEffect(()=>{
 
         if(!id) return
         const webDetail = async()=>{
-            const data = await presentSetting(Number(id))
+            const data = await presentSetting()
             setWeb(data)
         }
 
@@ -90,8 +91,13 @@ export function Contex({children} : Child){
         router.push("/")
     }
 
+    const loginUser = (user : string , id :string)=>{
+        setuser(user)
+        setId(id)
+    }
+
     return(
-        <ContextUser.Provider value={{user , handleUser ,logout , Remove , category,id,buy,RemoveProduct ,web}}>
+        <ContextUser.Provider value={{user , handleUser ,logout , Remove , category,id,buy,RemoveProduct ,web , loginUser}}>
             {children}
         </ContextUser.Provider>
     )

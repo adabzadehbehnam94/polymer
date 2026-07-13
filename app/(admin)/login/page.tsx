@@ -5,12 +5,12 @@ import { login } from "@/app/components/serverAction"
 import { useRouter } from "next/navigation"
 import { useActionState, useContext, useEffect } from "react"
 import { ToastContainer, toast } from 'react-toastify';
-import ContextUser, { VAl } from "../components/Contex";
+import ContextUser, { VAl } from "../../components/Contex";
 
 export default function Login(){
   const [state , formlogin] = useActionState(login , {})
   const router = useRouter()
-  // const {handleUser} = useContext<VAl | any>(ContextUser)
+  const {loginUser} = useContext<VAl | any>(ContextUser)
   useEffect(()=>{
     if(state?.emailErr){
       toast.error(state.emailErr)
@@ -29,9 +29,9 @@ export default function Login(){
     }
     if( state?.logSuccess){
       toast.success(state.logSuccess)
+      loginUser(state.user , state.id)
       router.push("/dashboard/overview")
-      // handleUser(state?.firstname)
-
+      
     }
     
   },[state])
