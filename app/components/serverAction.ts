@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers"
-// import { productsType } from "./Products"
+import { productsType } from "../(admin)/dashboard/products/page"
 import { prisma } from "@/lib/prisma"
 import cloudinary from "@/lib/cloudinary"
 import { resolve } from "path"
@@ -182,79 +182,84 @@ export const logoutUser = async () => {
 }
 
 
-// export async function productAction(state: productsType, formdata: Formdata): Promise<any> {
-//     const producName = formdata.get("producName")
-//     const price = parseInt(formdata.get("price"))
-//     const image = formdata.get("image") as File
-//     const category = formdata.get("category")
-//     const Description = formdata.get("Description")
+export async function productAction(state: productsType, formdata: Formdata): Promise<any> {
+    const productName = formdata.get("productName")
+    const price = parseInt(formdata.get("price"))
+    const image = formdata.get("image") as File
+    const categoryId = formdata.get("categoryId")
+    const details = formdata.get("details")
+    const brand = formdata.get("brand")
+    const application = formdata.get("application")
 
-//     if (producName === "") {
-//         return {
-//             nameErr: "فیلد نام اجباریست"
-//         }
-//     }
-//     if (price === 0) {
-//         return {
-//             priceErr: "فیلد قیمت اجباریست"
-//         }
-//     }
+    if (productName === "") {
+        return {
+            nameErr: "فیلد نام اجباریست"
+        }
+    }
+    if (price === 0) {
+        return {
+            priceErr: "فیلد قیمت اجباریست"
+        }
+    }
 
-//     if (category === null) {
-//         return {
-//             categoryErr: "فیلد دسته بندی اجباریست"
-//         }
-//     }
+    if (image === null) {
+        return {
+            imageErr: "تصویر محصول اضافه نشده"
+        }
+    }
 
-//     const bytes = await image.arrayBuffer()
-//     const buffer = Buffer.from(bytes)
+    const bytes = await image.arrayBuffer()
+    const buffer = Buffer.from(bytes)
 
-//     const uploadImage: any =
-//         await new Promise(
-//             (resolve, reject) => {
+    const uploadImage: any =
+        await new Promise(
+            (resolve, reject) => {
 
-//                 const stream =
-//                     cloudinary.uploader.upload_stream(
-//                         {
-//                             folder:
-//                                 "products",
-//                         },
+                const stream =
+                    cloudinary.uploader.upload_stream(
+                        {
+                            folder:
+                                "products",
+                        },
 
-//                         (error, result) => {
+                        (error, result) => {
 
-//                             if (error)
-//                                 reject(error);
+                            if (error)
+                                reject(error);
 
-//                             else
-//                                 resolve(result);
-//                         }
-//                     );
+                            else
+                                resolve(result);
+                        }
+                    );
 
-//                 stream.end(buffer);
-//             }
-//         );
+                stream.end(buffer);
+            }
+        );
 
-//     const result = await prisma.products.create({
-//         data: {
-//             producName: producName,
-//             price: price,
-//             detail: Description,
-//             categoryId: Number(category),
-//             image: uploadImage.secure_url
-//         },
-//     });
+    const result = await prisma.products.create({
+        data: {
+            productName: productName,
+            price: Number(price),
+            details: details,
+            categoryId: Number(categoryId),
+            image: uploadImage.secure_url,
+            brand : brand,
+            application : application
+
+        },
+    });
 
 
-//     if (result) {
-//         return {
-//             success: " محصول  با موفقیت ثبت شد"
-//         }
-//     } else {
-//         return {
-//             error: "ثبت محصول انجام نشد"
-//         }
-//     }
-// }
+    if (result) {
+        return {
+            success: " محصول  با موفقیت ثبت شد"
+        }
+    } else {
+        return {
+            error: "ثبت محصول انجام نشد"
+        }
+    }
+}
 
 export const removeUser = async (id: number | undefined) => {
     const data = await prisma.customers.delete({ where: { id: id } })
@@ -334,14 +339,16 @@ export async function buyProduct(id: { id: string }, products: any) {
 }
 
 export async function editProduct(state: StateProduct, formdata: Formdata): Promise<any> {
-    const producName = formdata.get("producName")
+    const productName = formdata.get("producName")
     const price = Number(formdata.get("price"))
-    const detail = formdata.get("detail")
+    const details = formdata.get("details")
     const id = Number(formdata.get("id"))
-    const category = Number(formdata.get("category"))
+    const categoryId = Number(formdata.get("category"))
     const image = formdata.get("image")
+    const application = formdata.get("application")
+    const brand = formdata.get("brand")
 
-    if (producName === "") {
+    if (productName === "") {
         return {
             nameErr: "فیلد نام محصول نباید خالی باشد"
         }
@@ -381,11 +388,13 @@ export async function editProduct(state: StateProduct, formdata: Formdata): Prom
     const fetchData = await prisma.products.update({
         where: { id: id },
         data: {
-            producName: producName,
+            productName: productName,
             price: price,
-            detail: detail,
-            categoryId: category,
-            image: imageUrl
+            details: details,
+            categoryId: categoryId,
+            image: imageUrl,
+            application : application,
+            brand : brand
         }
     })
 

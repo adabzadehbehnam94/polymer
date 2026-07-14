@@ -1,6 +1,7 @@
 
-import Form from "@/components/form"
+import Form from "@/app/(admin)/dashboard/products/[id]/editProduct/formEditProduct"
 import { prisma } from "@/lib/prisma"
+import { productsType } from "../../page"
 
 
 
@@ -12,7 +13,7 @@ interface ParamsId{
 
 export default async function EditProducts({params} : ParamsId) {
     const {id} = await params
-    const data = await prisma.products.findUnique({where : {id : Number(id)} , include : { category : true}})
+    const data : productsType | null = await prisma.products.findUnique({where : {id : Number(id)} , include : { category : true}})
     const categoryData = await prisma.categories.findMany()
     if(!data){
         return <div>محصول وجود ندارد</div>

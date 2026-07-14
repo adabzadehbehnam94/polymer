@@ -1,7 +1,30 @@
-import { productsType } from "@/components/Products";
+// import { productsType } from "@/app/components/Products";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
+
+
+export interface CategoryType {
+    id? : number,
+    name : string,
+    application? : string | null,
+    image? : string | null ,
+}
+
+
+export interface productsType {
+    id  : string | number ,
+    productName : string,
+    price : number ,
+    image : string,
+    categoryId? : number,
+    brand ? : string | null,
+    application? : string |null,
+    details? : string |null,
+    category? : CategoryType
+}
+
+
 
 
 export default async function Products() {
@@ -15,12 +38,12 @@ export default async function Products() {
 
                     <div key={item.id}>
                         <p className="text-blue-500 mb-2">{item.name} : </p>
-                        {data.map((product : productsType) =>(
+                        {data.map((product : any) =>(
                             product.categoryId === item.id && 
 
                             <Link href={`/dashboard/products/${product.id}`} className="mb-1 flex items-center gap-2 w-[fit-content]" key={product.id}>
-                                {product?.image && <Image className="rounded-md" src={product?.image} alt="image_product" width={40} height={40} />}
-                                <p>{product.producName}</p>
+                                <Image className="rounded-md" src={product?.image} alt="image_product" width={40} height={40} />
+                                <p>{product.productName}</p>
                             </Link>
                         ))}
 
