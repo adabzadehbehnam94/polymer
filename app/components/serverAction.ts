@@ -457,6 +457,11 @@ export async function allCustomers() {
     return data
 }
 
+export async function allSliderAds() {
+    const data = await prisma.sliderAds.findMany()
+    return data
+}
+
 
 export async function categoryAction(state: any, formdata: any): Promise<any> {
     const name = formdata.get("name")

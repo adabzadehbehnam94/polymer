@@ -18,14 +18,6 @@ const vazirmatn = localFont({
   src: "../public/fonts/Vazirmatn-Medium.ttf"
 })
 
-// const user = async () => {
-
-//   const data = 
-
-//   return data
-// }
-
-
 
 export default async function RootLayout({
   children,
@@ -58,9 +50,7 @@ export default async function RootLayout({
     >
       <body className={vazirmatn.className}>
         <Contex initialUser={user?.firstname} >
-
           {children}
-          <Footer />
         </Contex>
       </body>
     </html>
