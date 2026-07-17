@@ -6,8 +6,9 @@ import { prisma } from "@/lib/prisma"
 import cloudinary from "@/lib/cloudinary"
 import { resolve } from "path"
 import { rejects } from "assert"
-import { error } from "console"
+import { error, log } from "console"
 import bcrypt from "bcrypt"
+import { url } from "inspector"
 
 interface State {
     name?: string,
@@ -40,6 +41,17 @@ interface StateSetting {
     errAddress?: string,
     errMobile?: string,
 }
+
+interface SliderState {
+    errtitle: string,
+    errBackground?: string,
+    error: string,
+    success: string
+}
+
+// interface SliderFormdata {
+//     get : (name : string) => File | string | null | {}
+// }
 
 interface Data {
     firstName: string,
@@ -128,17 +140,17 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
         const hashedPassword = await bcrypt.compare(password, fetchdata!.password)
         if (hashedPassword) {
 
-                const cookie : any = await cookies()
-                cookie.set({
-                    name : "session",
-                    value : String(fetchdata?.id),
-                    httpOnly : true
-                })
-            
+            const cookie: any = await cookies()
+            cookie.set({
+                name: "session",
+                value: String(fetchdata?.id),
+                httpOnly: true
+            })
+
 
             return {
                 user: fetchdata?.firstname,
-                id : fetchdata?.id,
+                id: fetchdata?.id,
                 logSuccess: `خوش آمدید ${fetchdata?.firstname}`
             }
 
@@ -155,7 +167,7 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
     }
 }
 
-export const presentUser = async (): Promise<{ user?: string, cookieError?: string, id?: string ,name? : string }> => {
+export const presentUser = async (): Promise<{ user?: string, cookieError?: string, id?: string, name?: string }> => {
     const cookie = await cookies()
     const name = cookie.get("name")
     // const category = cookie.get("category")
@@ -178,7 +190,7 @@ export const presentUser = async (): Promise<{ user?: string, cookieError?: stri
 export const logoutUser = async () => {
     const cookie = await cookies()
     cookie.delete("session")
-    
+
 }
 
 
@@ -243,8 +255,8 @@ export async function productAction(state: productsType, formdata: Formdata): Pr
             details: details,
             categoryId: Number(categoryId),
             image: uploadImage.secure_url,
-            brand : brand,
-            application : application
+            brand: brand,
+            application: application
 
         },
     });
@@ -393,8 +405,8 @@ export async function editProduct(state: StateProduct, formdata: Formdata): Prom
             details: details,
             categoryId: categoryId,
             image: imageUrl,
-            application : application,
-            brand : brand
+            application: application,
+            brand: brand
         }
     })
 
@@ -440,6 +452,11 @@ export async function allCategories() {
     return data
 }
 
+export async function allCustomers() {
+    const data = await prisma.customers.findMany()
+    return data
+}
+
 
 export async function categoryAction(state: any, formdata: any): Promise<any> {
     const name = formdata.get("name")
@@ -470,7 +487,7 @@ export async function categoryAction(state: any, formdata: any): Promise<any> {
         })
 
         urlImage = uploudImage.secure_url
-    }else {
+    } else {
         urlImage = ""
     }
 
@@ -713,6 +730,185 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
 export async function presentSetting() {
     const data = await prisma.setting.findUnique({ where: { id: 1 } })
     return data
+}
+
+
+export async function adsAction(state: SliderState, formdata: Formdata) {
+    const title = formdata.get("title")
+    const subtitle = formdata.get("subtitle")
+    const background = formdata.get("background")
+    const logo = formdata.get("logo")
+    let urlLogo
+
+
+    if (typeof title !== "string" || title.trim() === "") {
+        return {
+            ...state,
+            errtitle: "فیلد تیتر نباید خالی باشد"
+        }
+    }
+
+    if (!(background instanceof File) || background.size === 0) {
+        return {
+            ...state,
+            errBackground: "فیلد تصویر تبلیغ نباید خالی باشد"
+        }
+    }
+    const byte = await background.arrayBuffer()
+    const buffer = Buffer.from(byte)
+
+    const uploadBackground: any = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            { folder: "background" },
+            (error, result) => {
+                if (error) reject(error)
+                else resolve(result)
+            }
+
+        )
+
+        stream.end(buffer)
+    })
+
+
+
+    if (logo instanceof File && logo.size > 0) {
+
+        const byte = await logo.arrayBuffer()
+        const buffer = Buffer.from(byte)
+
+        const uploadLogo: any = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { folder: "logoSlider" },
+                (error, result) => {
+                    if (error) reject(error)
+                    else resolve(result)
+                }
+            )
+
+            stream.end(buffer)
+        })
+
+        urlLogo = uploadLogo.secure_url
+    } else {
+        urlLogo = null
+    }
+
+    const data = await prisma.sliderAds.create({
+        data: {
+            title: title,
+            subtitle: subtitle,
+            background: uploadBackground.secure_url,
+            logo: urlLogo
+        }
+    })
+
+    if (data) {
+        return {
+            ...state,
+            success: "تبلیغ با موفقیت ثبت شد"
+        }
+    } else {
+        return {
+            ...state,
+            error: "ثبت تبلیغ انجام نشد"
+        }
+    }
+
+}
+
+export async function removeAds(id: number) {
+    const data = await prisma.sliderAds.delete({ where: { id: id } })
+}
+
+export async function editAds(state: SliderState, formdata: Formdata) {
+    const title = formdata.get("title")
+    const subtitle = formdata.get("subtitle")
+    const background = formdata.get("background")
+    const logo = formdata.get("logo")
+    const id = formdata.get("id")
+    let urlLogo
+    let urlbackground
+
+
+    if (typeof title !== "string" || title.trim() === "") {
+        return {
+            ...state,
+            errtitle: "فیلد تیتر نباید خالی باشد"
+        }
+    }
+
+    
+
+
+    if (background instanceof File && background.size > 0) {
+        const byte = await background.arrayBuffer()
+        const buffer = Buffer.from(byte)
+
+        const uploadBackground: any = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { folder: "background" },
+                (error, result) => {
+                    if (error) reject(error)
+                    else resolve(result)
+                }
+
+            )
+
+            stream.end(buffer)
+        })
+
+        urlbackground = uploadBackground.secure_url
+    }else {
+        urlbackground = formdata.get("oldBackground")
+    }
+
+
+
+    if (logo instanceof File && logo.size > 0) {
+
+        const byte = await logo.arrayBuffer()
+        const buffer = Buffer.from(byte)
+
+        const uploadLogo: any = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { folder: "logoSlider" },
+                (error, result) => {
+                    if (error) reject(error)
+                    else resolve(result)
+                }
+            )
+
+            stream.end(buffer)
+        })
+
+        urlLogo = uploadLogo.secure_url
+    } else {
+        urlLogo = formdata.get("oldLogo")
+    }
+
+    const data = await prisma.sliderAds.update({
+        where : {id : Number(id)} ,
+        data: {
+            title: title,
+            subtitle: subtitle,
+            background: urlbackground,
+            logo: urlLogo
+        }
+    })
+
+    if (data) {
+        return {
+            ...state,
+            success: "ویرایش با موفقیت انجام شد"
+        }
+    } else {
+        return {
+            ...state,
+            error: " ویرایش انجام نشد"
+        }
+    }
+
 }
 
 

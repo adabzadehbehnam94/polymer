@@ -8,6 +8,8 @@ import Setting from "@/public/images/icons/settings.png"
 import AddProduct from "@/public/images/icons/add.png"
 import AddUser from "@/public/images/icons/plus.png"
 import category from "@/public/images/icons/icons8-category-48.png"
+import ads from "@/public/images/icons/icons8-ads-64.png"
+import messages from "@/public/images/icons/icons8-messages-64.png"
 import { usePathname } from "next/navigation";
 
 
@@ -21,6 +23,8 @@ export default function Sidebar(props : {click?: ()=> void}) {
             <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/overview"}><Image className="ml-3" src={Overview} alt="icon" width={20} height={20} />نمای کلی</Link>
             <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/products"}><Image className="ml-3" src={Products} alt="icon" width={20} height={20} />محصولات</Link>
             <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/customers"}><Image className="ml-3" src={Users} alt="icon" width={20} height={20} />مشتریان</Link>
+            <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/messages"}><Image className="ml-3" src={messages} alt="icon" width={20} height={20} />پیام ها</Link>
+            <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/sliderAds"}><Image className="ml-3" src={ads} alt="icon" width={20} height={20} />تبلیغات اسلایدر</Link>
             <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/setting"}><Image className="ml-3" src={Setting} alt="icon" width={20} height={20} />تنضیمات</Link>
             <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/products/importProduct"}><Image className="ml-3" src={AddProduct} width={20} height={20} alt="image" /> ایجاد محصول جدید</Link>
             <Link onClick={props.click} className="flex mb-5 w-[fit-content]" href={"/dashboard/customers/addCustomer"}><Image  className="ml-3" src={AddUser} width={20} height={20} alt="image"/>ایجاد مشتری جدید</Link>

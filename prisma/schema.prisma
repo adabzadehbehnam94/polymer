@@ -71,8 +71,8 @@ model AboutUs{
 
 model Messages {
   id Int @id @default(autoincrement())
-  name String?
-  phone String?
+  name String
+  phone String
   email String?
   messageSubject String
   messageText String
@@ -102,5 +102,13 @@ model Articles{
   publishedAt DateTime?
 
 
+}
+
+model SliderAds {
+  id Int @id @default(autoincrement())
+  title String
+  subtitle String?
+  background String
+  logo String?
 }
 
