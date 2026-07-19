@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import logo from "@/public/images/pictures/logo menu.png"
+import logo from "@/public/images/pictures/newMainLogo.png"
 import hambergerIcon from "@/public/images/pictures/hamberger_menu.png"
 import Image from "next/image";
 import { IoIosCall } from "react-icons/io";
@@ -18,7 +18,7 @@ export default function Header() {
         <header className={`bg-black text-white main-header h-15 items-center flex sticky ${styles.mainHeader}`}>
             <div className="container mx-auto grid grid-cols-2 md:grid-cols-3 px-3 sm:px-5 md:px-0">
                 <div  className="flex justify-sart items-center md:justify-center">
-                    <Link href={"/"} className="w-fit"><Image alt="logo" src={logo}  /></Link>
+                    <Link href={"/"} className="w-fit"><Image alt="logo" src={logo} width={110} height={40}  /></Link>
                 </div>
                 <div className={`flex items-center  justify-between ${styles.mobile_menu}  ${actMenu}`} >
                     <IoMdClose className="md:hidden absolute left-5" onClick={()=> setactMenu("left-[-7000]")} />

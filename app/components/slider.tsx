@@ -35,8 +35,11 @@ export default function Slider({ sliderData }: { sliderData:sliderType[] }) {
             >
 
                 {sliderData.map((item: sliderType) => (
-                    <SwiperSlide key={item.id}>
-                        <div className="text-white relative">
+                    <SwiperSlide  key={item.id}>
+                        <div 
+                        className="text-white relative  h-100 overflow-hidden bg-center bg-cover bg-no-repeat "
+                        style={{backgroundImage : `url(${item.background})`}}
+                        >
                             <div className="absolute md:top-20 md:right-40 md:w-100 top-5 right-5 ">
                                 <h1 className="md:text-3xl md:mb-5 mb-3">{item.title}</h1>
                                 {item?.subtitle && <p className="md:text-sm text-[#87898f] text-xs md:mb-5 mb-3">{item.subtitle}</p>}
@@ -49,7 +52,7 @@ export default function Slider({ sliderData }: { sliderData:sliderType[] }) {
                                 </div>
                             }
 
-                            <Image src={item.background} loading="eager" alt="slider" width={700} height={500} style={{ width: "100%", height: "100%" }} />
+                            
                         </div>
                     </SwiperSlide>
                 ))}

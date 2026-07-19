@@ -1,4 +1,4 @@
-import logoFooter from "@/public/images/pictures/footerLogo.png"
+import logoFooter from "@/public/images/pictures/newMainLogo.png"
 import rubika from "@/public/images/pictures/rubika_gray_new.png"
 import eitaa from "@/public/images/pictures/eitaa-icon-gray.png"
 import bale from "@/public/images/pictures/bale_white.png"
@@ -17,7 +17,7 @@ export default function Footer(){
         <footer className={`${style.main_footer}`}>
             <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 <section className=" md:pl-2">
-                    <Link href={"/"} className="w-fit block"><Image src={logoFooter} alt="logoFooter"/></Link>
+                    <Link href={"/"} className="w-fit block"><Image src={logoFooter} alt="logoFooter" width={120} height={50}/></Link>
                     <p>تامین کننده انواع مواد پلیمری با کیفیت , پایدار و قابل اعتماد</p>
                     <div className={`flex justify-between ${style.social_media}`}>
                         <Link href={"@mohsenyavary.com"}><FaWhatsapp /></Link>

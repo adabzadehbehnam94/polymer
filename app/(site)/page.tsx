@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Slider from "../components/slider";
-import barg from "@/public/images/pictures/product_section_icon.png"
-import barg2 from "@/public/images/pictures/barg_transparent.png"
+import leaf from "@/public/images/icons/leaf.png"
+import leaf2 from "@/public/images/icons/leaf2.png"
 import PP from "@/public/images/pictures/pp.png"
 import PE from "@/public/images/pictures/pe.png"
 import PVC from "@/public/images/pictures/pvc.png"
@@ -21,8 +21,8 @@ import { allCategories, allSliderAds } from "../components/serverAction";
 
 export default async function Home() {
 
-  const slider = await allSliderAds()
-  const categories = await allCategories()
+  const slider = await allSliderAds(4)
+  const categories = await allCategories(4)
   return (
     <div className="bg-black">
       <section className="container mx-auto ">
@@ -30,7 +30,7 @@ export default async function Home() {
       </section>
       <section className="bg-black">
         <div className="py-5 text-white flex justify-center items-center">
-          <Image className="ml-1" src={barg} alt="barg" />
+          <Image className="ml-2" src={leaf} width={25} height={25} alt="barg" />
           <h3>دسته بندی محصولات</h3>
         </div>
         <div className="flex container mx-auto  grid grid-cols-2 gap-5 pb-20 px-3 sm:px-4 md:px-5 sm:grid-cols-3 md:grid-cols-4  ">
@@ -44,7 +44,7 @@ export default async function Home() {
       </section>
       <section className="bg-provider">
         <div className="py-5 text-white flex justify-center items-center">
-          <Image className="ml-1" src={barg2} alt="barg" width={40} height={40} />
+          <Image  className="ml-2" src={leaf2} alt="barg" width={30} height={30} />
           <h3>خدمات ما</h3>
         </div>
         <div className="flex container mx-auto grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 px-3 sm:px-4 md:px-5">

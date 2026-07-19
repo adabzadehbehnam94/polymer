@@ -447,8 +447,8 @@ export async function allProducts() {
     return data.length
 }
 
-export async function allCategories() {
-    const data = await prisma.categories.findMany()
+export async function allCategories(count? : number ) {
+    const data = await prisma.categories.findMany({take : count})
     return data
 }
 
@@ -457,8 +457,8 @@ export async function allCustomers() {
     return data
 }
 
-export async function allSliderAds() {
-    const data = await prisma.sliderAds.findMany()
+export async function allSliderAds(count? : number) {
+    const data = await prisma.sliderAds.findMany({take : count})
     return data
 }
 
