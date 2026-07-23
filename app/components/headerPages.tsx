@@ -17,7 +17,7 @@ export default function HeaderPages({ title, subtitle, icon , summary }: HeaderT
     
     return (
         <div>
-            <header className="bg-cover bg-center h-50 relative overflow-hidden" style={
+            <header className="bg-cover bg-center h-50 relative" style={
                 { backgroundImage: path === "/pages/aboutUs" ? "url('/images/pictures/aboutPageHeader.png')" : "url('/images/pictures/background_header_page.png')" }
             }>
                 
@@ -26,8 +26,8 @@ export default function HeaderPages({ title, subtitle, icon , summary }: HeaderT
                         {icon && <Image src={icon} width={40} height={40} alt="icon" />}
                         <h1 className=" text-[#f5f5f4]  text-4xl">{title}</h1>
                     </div>
-                    <p className=" text-[#969a97] text-sm">{subtitle}</p>
-                    {summary && <p className=" text-white">{summary}</p>}
+                    <p className={`${path === "/pages/aboutUs" ? 'text-white' : 'text-[#969a97]'}}text-sm mb-5`}>{subtitle}</p>
+                    {summary && <p className=" text-[#969a97] w-150">{summary}</p>}
                 </div>
             </header>
         </div>
