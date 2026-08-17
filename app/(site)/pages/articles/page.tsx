@@ -1,11 +1,58 @@
+// import ArticleCard, { ArticlesType } from "@/app/components/articleCard";
 import HeaderPages from "@/app/components/headerPages";
+import { allArticles } from "@/app/components/serverAction";
+import { prisma } from "@/lib/prisma";
 import leaf from "@/public/images/icons/leaf.png"
+import Image from "next/image";
+import Link from "next/link";
+import moment from "jalali-moment"
+
+export interface ArticlesType {
+    id: number,
+    image: string,
+    summary?: string | null,
+    title: string,
+    publishedAt: any
+}
 
 
-export default function Articles(){
-    return(
+
+export default async function Articles({serachParams} : {serachParams : Promise<{count : number | null}>}) {
+    const params = await serachParams
+    
+    const articlesData: ArticlesType[] = await allArticles()
+
+    const persianDate = (Date: string) => {
+        const change = moment(Date).locale("fa").format("YYYY/MM/DD")
+        return change
+    }
+
+
+    return (
         <div>
-            <HeaderPages icon={leaf} title="مقالات" subtitle="دانش و اطلاعت بروز در صنعت پلیمر"/>
+            <HeaderPages icon={leaf} title="مقالات" subtitle="دانش و اطلاعت بروز در صنعت پلیمر" />
+            <div className="container mx-auto my-10">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-10">
+                    {articlesData.map((item: ArticlesType) => (
+                        <Link
+                            href={`/pages/articles/${item.id}`}
+                            className="rounded-lg overflow-hidden bg-[#121919] flex flex-col  gap-3" key={item.id}>
+                            <Image src={item.image} width={300} height={200} alt="product" className="w-[100%] h-60" />
+                            <div className="flex flex-col gap-3 px-5 pb-5">
+                                <p className="text-[#dde1de] text-sm">{item.title}</p>
+
+                                {item?.summary && <p className="text-[#909292] text-xs">{item.summary}</p>}
+                                <div className="flex justify-between">
+                                    <p className="text-[#909292] text-xs">{persianDate(item.publishedAt)}</p>
+                                    <p className="text-[#909292] text-xs">زمان مطالعه : {persianDate(item.publishedAt)}</p>
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
+
         </div>
     )
 }

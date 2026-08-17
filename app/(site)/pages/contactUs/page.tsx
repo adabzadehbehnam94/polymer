@@ -1,7 +1,17 @@
-export default function Contactus(){
+
+
+import { prisma } from "@/lib/prisma";
+import FetchSetting from "./fetchSetting";
+
+
+export default async function Contactus(){
+    const data = await prisma.setting.findUnique({where : {id : 1}})
+    
+    
+    if(!data){
+        return <p>تنظیمات وجود ندارد</p>
+    }
     return(
-        <div>
-            <h3>this is Contactus page</h3>
-        </div>
+        <FetchSetting settingData={data}/>
     )
 }

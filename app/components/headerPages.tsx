@@ -17,17 +17,18 @@ export default function HeaderPages({ title, subtitle, icon , summary }: HeaderT
     
     return (
         <div>
-            <header className="bg-cover bg-center h-50 relative" style={
+            <header className="bg-cover bg-center min-h-50 relative overflow-hidden border-[#232a2b] border-b-1 border-t-1" style={
                 { backgroundImage: path === "/pages/aboutUs" ? "url('/images/pictures/aboutPageHeader.png')" : "url('/images/pictures/background_header_page.png')" }
             }>
                 
                 <div className="relative mr-40 mt-15">
-                    <div className="flex  items-center gap-3 mb-5">
+                    <div className="flex  items-center gap-3 mb-3">
                         {icon && <Image src={icon} width={40} height={40} alt="icon" />}
                         <h1 className=" text-[#f5f5f4]  text-4xl">{title}</h1>
                     </div>
-                    <p className={`${path === "/pages/aboutUs" ? 'text-white' : 'text-[#969a97]'}}text-sm mb-5`}>{subtitle}</p>
-                    {summary && <p className=" text-[#969a97] w-150">{summary}</p>}
+                    {/* <p className={`${path === "/pages/aboutUs" ? 'text-white' : 'text-[#969a97]'}}text-sm mb-5`}>{subtitle}</p> */}
+                    <p className={`${path === '/pages/aboutUs' ? 'text-white' : 'text-[#969a97]'} text-md mb-5`}>{subtitle}</p>
+                    {summary && <p className=" text-[#969a97] mb-12 w-150">{summary}</p>}
                 </div>
             </header>
         </div>

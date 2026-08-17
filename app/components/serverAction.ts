@@ -49,9 +49,13 @@ interface SliderState {
     success: string
 }
 
-// interface SliderFormdata {
-//     get : (name : string) => File | string | null | {}
-// }
+interface ArticleState {
+    errtitle: string,
+    errcontent: string,
+    errimage: string,
+    success: string,
+    error: string
+}
 
 interface Data {
     firstName: string,
@@ -72,6 +76,14 @@ interface PromisEditSetting {
     logoErr?: string,
     errMobile?: string
     webNameErr?: string
+}
+
+interface MessageState {
+    errName?: string,
+    errPhone?: string,
+    errMessage?: string,
+    success?: string,
+    error?: string,
 }
 
 export async function registerAction(state: State, formdata: Formdata): Promise<any> {
@@ -447,8 +459,8 @@ export async function allProducts() {
     return data.length
 }
 
-export async function allCategories(count? : number ) {
-    const data = await prisma.categories.findMany({take : count})
+export async function allCategories(count?: number) {
+    const data = await prisma.categories.findMany({ take: count })
     return data
 }
 
@@ -457,8 +469,13 @@ export async function allCustomers() {
     return data
 }
 
-export async function allSliderAds(count? : number) {
-    const data = await prisma.sliderAds.findMany({take : count})
+export async function allSliderAds(count?: number) {
+    const data = await prisma.sliderAds.findMany({ take: count })
+    return data
+}
+
+export async function allArticles(count?: number) {
+    const data = await prisma.articles.findMany({ take: count })
     return data
 }
 
@@ -843,7 +860,7 @@ export async function editAds(state: SliderState, formdata: Formdata) {
         }
     }
 
-    
+
 
 
     if (background instanceof File && background.size > 0) {
@@ -864,7 +881,7 @@ export async function editAds(state: SliderState, formdata: Formdata) {
         })
 
         urlbackground = uploadBackground.secure_url
-    }else {
+    } else {
         urlbackground = formdata.get("oldBackground")
     }
 
@@ -893,7 +910,7 @@ export async function editAds(state: SliderState, formdata: Formdata) {
     }
 
     const data = await prisma.sliderAds.update({
-        where : {id : Number(id)} ,
+        where: { id: Number(id) },
         data: {
             title: title,
             subtitle: subtitle,
@@ -916,4 +933,228 @@ export async function editAds(state: SliderState, formdata: Formdata) {
 
 }
 
+
+export async function articleAction(state: ArticleState, formdata: Formdata) {
+    const title = formdata.get("title")
+    const slug = formdata.get("slug")
+    const summary = formdata.get("summary")
+    const image = formdata.get("image")
+    const author = formdata.get("author")
+    const content = formdata.get("content")
+
+
+
+    if (typeof title !== "string" || title.trim() === "") {
+        return {
+            ...state,
+            errtitle: "فیلد تیتر نباید خالی باشد"
+        }
+    }
+
+    if (typeof content !== "string" || content.trim() === "") {
+        return {
+            ...state,
+            errcontent: "فیلد متن اصلی نباید خالی باشد"
+        }
+    }
+
+
+    if (!(image instanceof File) || image.size === 0) {
+        return {
+            ...state,
+            errimage: "فیلد تصویر مقاله نباید خالی باشد"
+        }
+    }
+    const byte = await image.arrayBuffer()
+    const buffer = Buffer.from(byte)
+
+    const uploadImage: any = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            { folder: "image" },
+            (error, result) => {
+                if (error) reject(error)
+                else resolve(result)
+            }
+
+        )
+
+        stream.end(buffer)
+    })
+
+
+    const data = await prisma.articles.create({
+        data: {
+            title: title,
+            summary: summary,
+            content: content,
+            image: uploadImage.secure_url,
+            author: author,
+            slug: slug
+        }
+    })
+
+    if (data) {
+        return {
+            ...state,
+            success: "تبلیغ با موفقیت ثبت شد"
+        }
+    } else {
+        return {
+            ...state,
+            error: "ثبت تبلیغ انجام نشد"
+        }
+    }
+
+}
+
+export async function articleEdit(state: ArticleState, formdata: Formdata) {
+    const id = formdata.get("id")
+    const title = formdata.get("title")
+    const slug = formdata.get("slug")
+    const summary = formdata.get("summary")
+    const image = formdata.get("image")
+    const author = formdata.get("author")
+    const content = formdata.get("content")
+    const isPublished = formdata.get("isPublished")
+    let urlImage
+    let publishedStatus
+
+
+
+    if (typeof title !== "string" || title.trim() === "") {
+        return {
+            ...state,
+            errtitle: "فیلد تیتر نباید خالی باشد"
+        }
+    }
+
+    if (typeof content !== "string" || content.trim() === "") {
+        return {
+            ...state,
+            errcontent: "فیلد متن اصلی نباید خالی باشد"
+        }
+    }
+
+    if (image instanceof File && image.size > 0) {
+        const byte = await image.arrayBuffer()
+        const buffer = Buffer.from(byte)
+
+        const uploadImage: any = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { folder: "image" },
+                (error, result) => {
+                    if (error) reject(error)
+                    else resolve(result)
+                }
+
+            )
+
+            stream.end(buffer)
+        })
+
+        urlImage = uploadImage.secure_url
+    }else{
+        urlImage = formdata.get("oldImage")
+    }
+
+    if(isPublished === "false"){
+        publishedStatus = false
+    }else{
+        publishedStatus = true
+    }
+
+
+    const oldData = await prisma.articles.findUnique({where : {id : Number(id)}})
+    const data = await prisma.articles.update({
+        where : {id : Number(id)} ,
+        data: {
+            title: title,
+            summary: summary,
+            content: content,
+            image: urlImage,
+            author: author,
+            slug: slug,
+            isPublished : publishedStatus,
+            publishedAt : !oldData?.publishedAt && isPublished ? new Date() : oldData?.publishedAt
+        }
+    })
+
+    console.log(data);
+    
+
+    if (data) {
+        return {
+            ...state,
+            success: "ویرایش مقاله با موفقیت انجام شد"
+        }
+    } else {
+        return {
+            ...state,
+            error: " ویرایش انجام نشد"
+        }
+    }
+
+}
+
+export async function articleDelete(id : number) {
+    
+    const data = await prisma.articles.delete({
+        where : {id : id} 
+    })
+
+}
+
+export async function messageAction(state : MessageState, formdata : Formdata) {
+    const name = formdata.get("name")
+    const phone = formdata.get("phone")
+    const email = formdata.get("email")
+    const subject = formdata.get("subject")
+    const messageText = formdata.get("messageText")
+
+    if(typeof name !== "string" || name.trim() === "" ){
+        return{
+            ...state,
+            errName : "فیلد نام نباید خالی باشد"
+        }
+    }
+
+    if(typeof phone !== "string" || phone.trim() === "" ){
+        return{
+            ...state,
+            errPhone : "فیلد شماره تماس نباید خالی باشد"
+        }
+    }
+
+    if(typeof messageText !== "string" || messageText.trim() === "" ){
+        return{
+            ...state,
+            errMessage : " متن پیام نباید خالی باشد"
+        }
+    }
+
+    
+
+    const data = await prisma.messages.create({
+        data : {
+            name : name,
+            phone : phone,
+            email : email,
+            messageSubject : subject,
+            messageText : messageText
+        }
+    })
+
+    if(data){
+        return {
+            ...state,
+            success : "پیام با موفقیت ارسال شد"
+        }
+    }else{
+        return{
+            ...state,
+            error : "ارسال پیام با خطا مواجه شد"
+        }
+    }
+
+}
 
