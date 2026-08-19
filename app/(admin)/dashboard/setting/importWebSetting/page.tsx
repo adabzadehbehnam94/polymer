@@ -1,6 +1,6 @@
 "use client"
 
-import { importWebDetail } from "@/components/serverAction"
+import { importWebDetail } from "@/app/components/serverAction"
 import { useActionState, useEffect } from "react"
 import { toast, ToastContainer } from "react-toastify"
 

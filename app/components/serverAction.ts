@@ -655,8 +655,7 @@ export async function importWebDetail(state: StateSetting, formdata: Formdata) {
             logo: uploadLogo.secure_url,
             email: email,
             address: address,
-            phone: phone,
-            userId: Number(userId)
+            phone: phone
         }
     })
 
