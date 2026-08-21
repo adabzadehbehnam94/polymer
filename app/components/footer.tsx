@@ -1,3 +1,4 @@
+"use client"
 import logoFooter from "@/public/images/pictures/newMainLogo.png"
 import rubika from "@/public/images/pictures/rubika_gray_new.png"
 import eitaa from "@/public/images/pictures/eitaa-icon-gray.png"
@@ -11,13 +12,21 @@ import { FaMobileAlt } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaRegCopyright } from "react-icons/fa6";
 import style from "@/app/styles/footer.module.css"
+import ContextUser, { VAl } from "./Contex"
+import { useContext } from "react"
 
 export default function Footer(){
+    const {web ,categoryFooter} = useContext<VAl | any>(ContextUser)
     return(
         <footer className={`${style.main_footer}`}>
             <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 <section className=" md:pl-2">
-                    <Link href={"/"} className="w-fit block"><Image src={logoFooter} alt="logoFooter" width={120} height={50}/></Link>
+                    {/* <Link href={"/"} className="w-fit block"><Image src={logoFooter} alt="logoFooter" width={120} height={50}/></Link> */}
+                    {web?.logo &&
+                        <Link href={"/"} className="w-[auto] block">
+                            <Image alt="logo" width={120} height={50} src={web.logo} />
+                        </Link>
+                    }
                     <p>تامین کننده انواع مواد پلیمری با کیفیت , پایدار و قابل اعتماد</p>
                     <div className={`flex justify-between ${style.social_media}`}>
                         <Link href={"@mohsenyavary.com"}><FaWhatsapp /></Link>
@@ -38,11 +47,14 @@ export default function Footer(){
                     <Link href={"/pages/contactUs"}>تماس با ما</Link>
                 </section>
                 <section className="flex flex-col">
-                    <h2>محصولات</h2>
-                    <Link href={"/"}>پلی اتیلن (PE)</Link>
+                    <h2>دسته بندی ها</h2>
+                    {/* <Link href={"/"}>پلی اتیلن (PE)</Link>
                     <Link href={"/"}>پلی پرو بیلن (PP)</Link>
                     <Link href={"/"}>PVC</Link>
-                    <Link href={"/"}>ABS</Link>
+                    <Link href={"/"}>ABS</Link> */}
+                    {categoryFooter?.map((item : {name : string , id:number})=>(
+                        <Link key={item.id} href={`/pages/products?category=${item.id}`}>{item.name}</Link>
+                    ))}
                 </section>
                 <section>
                     <h2>خدمات</h2>
@@ -53,8 +65,8 @@ export default function Footer(){
                 </section>
                 <section className={`${style.address}`}>
                     <h2>اطلاعات تماس</h2>
-                    <p className="flex"><FaMobileAlt />0919-828-2713</p>
-                    <p className="flex"><IoLocationOutline />تهران</p>
+                    <p className="flex"><FaMobileAlt />{web?.phone}</p>
+                    <p className="flex"><IoLocationOutline />{web?.address}</p>
                 </section>
             </div>
             <div className="container mx-auto flex justify-center items-center gap-2 ">

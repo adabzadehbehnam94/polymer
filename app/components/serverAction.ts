@@ -182,14 +182,14 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
 export const presentUser = async (): Promise<{ user?: string, cookieError?: string, id?: string, name?: string }> => {
     const cookie = await cookies()
     const name = cookie.get("name")
-    // const category = cookie.get("category")
+    
     const user: any = cookie.get("user")
 
 
     if (name) {
         return {
             user: name.value,
-            // category: category.value,
+            
             id: user.value
         }
     } else {
@@ -674,7 +674,6 @@ export async function importWebDetail(state: StateSetting, formdata: Formdata) {
 }
 
 export async function editWebSetting(state: StateSetting, formdata: Formdata): Promise<PromisEditSetting> {
-    const id = formdata.get("id")
     const logo = formdata.get("logo")
     const name = formdata.get("name")
     const detail = formdata.get("detail")
@@ -688,7 +687,7 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
         }
     }
 
-    if (name === "") {
+    if (typeof name !== "string" ||  name.trim() === "") {
         return {
             webNameErr: "نام شرکت نباید خالی باشد"
         }
@@ -726,7 +725,7 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
 
 
     const data = await prisma.setting.update({
-        where: { id: Number(id) },
+        where: { id: 1 },
         data: {
             logo: logoUrl,
             name: name,

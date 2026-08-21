@@ -1,6 +1,6 @@
 "use client"
 import { createContext, useEffect, useState } from "react"
-import { buyProduct,logoutUser,presentSetting, presentUser, removeProduct, removeUser } from "./serverAction"
+import { allCategories, buyProduct,logoutUser,presentSetting, presentUser, removeProduct, removeUser } from "./serverAction"
 import { useRouter } from "next/navigation"
 
 interface User{
@@ -23,8 +23,9 @@ export interface VAl  {
     id : string | undefined | null,
     buy : (id : {id : string},products : any )=> void,
     RemoveProduct : (id : number)=> void,
-    web : WebDetail | null
-    loginUser : any | null
+    web : WebDetail | null,
+    loginUser : any | null,
+    categoryFooter : object[] | null
 
 }
 
@@ -43,6 +44,7 @@ const ContextUser = createContext<VAl | null>(null)
 export function Contex({children , initialUser} : contextProps){
     const [user , setuser] = useState<any | null >(initialUser)
     const [web , setWeb] = useState <any | null>(null)
+    const [categoryFooter , setCategoryFooter] = useState <any | null>(null)
     const [category , setCategory] = useState<{category : string} | null >(null)
     const [id , setId] = useState<string | undefined | null>(undefined)
     const router =useRouter()
@@ -60,15 +62,19 @@ export function Contex({children , initialUser} : contextProps){
     
 
     useEffect(()=>{
-
-        if(!id) return
         const webDetail = async()=>{
             const data = await presentSetting()
             setWeb(data)
         }
 
+        const categoryDetail = async()=>{
+            const data = await allCategories()
+            setCategoryFooter(data)
+        }
+
         webDetail()
-    },[id])
+        categoryDetail()
+    },[])
 
     const Remove = (id : number) =>{
         removeUser(id)
@@ -91,7 +97,7 @@ export function Contex({children , initialUser} : contextProps){
     }
 
     return(
-        <ContextUser.Provider value={{user , handleUser ,logout , Remove , category,id,buy,RemoveProduct ,web , loginUser}}>
+        <ContextUser.Provider value={{user , handleUser ,logout , Remove , category,id,buy,RemoveProduct ,web , loginUser ,categoryFooter}}>
             {children}
         </ContextUser.Provider>
     )

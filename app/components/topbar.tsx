@@ -4,21 +4,18 @@ import { useContext, useState } from "react"
 import ContextUser from "./Contex"
 import { VAl } from "./Contex"
 import Link from "next/link"
-// import { useSelector } from "react-redux"
-import cart from "@/public/images/icons/icons8-shopping-cart-48.png"
 import menu from "@/public/images/icons/icons8-hamburger-menu-48.png"
 import close from "@/public/images/icons/icons8-close-button-32.png"
 import User from "@/public/images/icons/icons8-user-40.png"
 import Exit from "@/public/images/icons/icons8-exit-sign-40.png"
 import Image from "next/image"
 import Sidebar from "./sidebar"
-// import SidebarProfile from "./sidebarProfile"
+
 
 
 
 export default function Topbar() {
-    const { web,user, logout, category } = useContext<VAl | any>(ContextUser)
-    // const selector = useSelector((state: { card: any }) => state.card)
+    const {user, logout} = useContext<VAl | any>(ContextUser)
     const [menuMobile, setmenuMobile] = useState(menu)
     const [open, setopen] = useState(false)
     const mobile = () => {
@@ -46,10 +43,7 @@ export default function Topbar() {
                             <button type="button" className="cursor-pointer ml-10 hidden sm:flex" onClick={logout}>خروج</button>
                             
                         </div>
-                        {/* <div>{web?.webName}</div> */}
-                        {/* <div>
-                            {web?.logo && <Image className="w-auto h-auto" src={web.logo} alt="logo" width={50} height={50}/>}
-                        </div> */}
+                        
                     </header>
                     {open &&
                         <div className={`bg-blue-500 h-150 absolute ${open} right-0 top-20 w-50 pt-10 pr-5`}>

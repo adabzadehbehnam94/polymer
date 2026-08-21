@@ -9,7 +9,6 @@ interface Web {
         name: string,
         detail?: string | null,
         logo: string,
-        id: number,
         email? : string | null,
         phone : string,
         address : string,

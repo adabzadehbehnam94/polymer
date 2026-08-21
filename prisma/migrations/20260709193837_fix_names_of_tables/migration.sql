@@ -14,19 +14,6 @@
 ALTER TABLE `articles` DROP COLUMN `publisheAt`,
     ADD COLUMN `publishedAt` DATETIME(3) NULL;
 
--- AlterTable
-ALTER TABLE `categories` DROP COLUMN `Application`,
-    ADD COLUMN `application` VARCHAR(191) NULL;
-
--- AlterTable
-ALTER TABLE `products` DROP COLUMN `Application`,
-    DROP COLUMN `Details`,
-    ADD COLUMN `application` VARCHAR(191) NULL,
-    ADD COLUMN `details` VARCHAR(191) NULL;
-
--- AlterTable
-ALTER TABLE `setting` DROP COLUMN `WorkingHours`,
-    ADD COLUMN `workingHours` VARCHAR(191) NULL;
 
 -- AlterTable
 ALTER TABLE `users` DROP COLUMN `fristname`,
