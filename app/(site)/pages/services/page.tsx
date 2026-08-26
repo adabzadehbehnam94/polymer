@@ -20,8 +20,8 @@ export default function Services() {
     return (
         <div>
             <HeaderPages icon={leaf} title="خدمات" subtitle="راهکار های تخصصی برای نیاز های صنعت پلیمر" />
-            <section className="container mx-auto">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+            <section className="container mx-auto px-5">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 my-5">
                     <ServicesCard image={recycle} title="بازیافت پلیمر ها"
                         subtitle="ارائه راهکار های بازیافت و استفاده مجدد از پلیمر های مصرفی" />
                     <ServicesCard image={gears} title="بهینه سازی تولید"
@@ -33,18 +33,16 @@ export default function Services() {
                     <ServicesCard image={headphone} title="مشاوره فنی"
                         subtitle="ارائه مشاوره تخصصی در انتخاب مواد اولیه وبهینه سازی فرایند های تولید " />
                 </div>
-                <div className="flex gap-5 items-center mb-5 h-20  justify-center bg-[#141b1a] rounded-lg">
+                <div className="flex flex-col md:flex-row gap-5 items-center p-3 mb-5 md:h-20  justify-center bg-[#141b1a] rounded-lg">
 
-                    
-                        <Link className="bg-[#2d7d11] rounded-md flex items-center text-white text-xs px-4 py-3 pl-7 gap-2 text-center "
-                            href={"/"}><IoIosCall className="mr-3" />تماس با ما
+                        <Link className="order-last md:order-first bg-[#2d7d11] rounded-md flex items-center text-white text-xs px-4 py-3 pl-7 gap-2 text-center "
+                            href={"/pages/contactUs"}><IoIosCall className="mr-3" />تماس با ما
                         </Link>
-                        <p className="text-[#9aa09e] text-sm">
+                        <p className=" text-[#9aa09e] text-sm">
                             ما راهکار های متناسب با نیاز خاص کسب و کار  شما ارائه می دهیم .برای دریافت مشاوره تخصصی با ما درارتباط باشید .
                         </p>
-                        <Image className="h-[fit-content]" src={logo} width={60} height={60} alt="logo" />
+                        <Image className="order-first md:order-last h-[fit-content]" src={logo} width={60} height={60} alt="logo" />
                     
-
                 </div>
             </section>
         </div>
