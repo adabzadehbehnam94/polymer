@@ -17,10 +17,10 @@ export default async function Messages (){
             {messages.length > 0 ? 
 
             messages.map((item : any )=>(
-                <div key={item.id} className="border-b-2 border-gray-300 flex gap-2 ">
-                    <p>{item.name}</p>
+                <div key={item.id} className="border-b-2 border-gray-300  flex flex-col gap-3 lg:w-200 py-3 ">
+                    <p className="text-blue-500">{item.name}</p>
                     <p>{item.messageText}</p>
-                    <Link className="bg-blue-500 rounded-md text-white px-2 py-1" href={`/dashboard/messages/${item.id}`}>مشاهده پیام</Link>
+                    <Link className="bg-blue-500 rounded-md w-30 text-white text-center py-1 hover:bg-blue-700" href={`/dashboard/messages/${item.id}`}>مشاهده پیام</Link>
                 </div>
             )) 
            

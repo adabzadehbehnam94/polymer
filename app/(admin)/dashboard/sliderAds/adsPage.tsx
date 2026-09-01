@@ -31,13 +31,24 @@ export default function AdsPage({ data }: { data: SliderItem[] }) {
     return (
         <div className="flex flex-col">
             {data.map((item: SliderItem) => (
-                <div className="flex gap-5 border-b-2 border-gray-300 items-center py-3" key={item.id}>
-                    <Image className="rounded-md" src={item.background} alt="background" width={200} height={100} />
-                    <p >{item.title}</p>
-                    {item?.subtitle && <p>{item.subtitle}</p>}
-                    {item?.logo && <Image src={item.logo} alt="logo" width={40} height={40} />}
-                    <button onClick={()=> router.push(`/dashboard/sliderAds/${item.id}`)} className="bg-blue-500 rounded-md text-white hover:bg-blue-700 px-2 py-1 cursor-pointer">ویرایش تبلیغ</button>
-                    <button onClick={async () => await removeAction(item.id)} className="bg-blue-500 rounded-md text-white hover:bg-blue-700 px-2 py-1 cursor-pointer">حذف تبلیغ</button>
+                
+                <div key={item.id} className="flex lg:flex-row flex-col gap-5 border-b-2 border-gray-300 py-5">
+                    <div >
+                        <Image src={item.background} className="rounded-lg h-30" alt="image" width={200} height={100} />
+                    </div>
+                    <div className="flex flex-col gap-3">
+                        <p>{item.title}</p>
+                        {item?.subtitle && <p> {item.subtitle}</p>}
+                        <div className="flex gap-5">
+                            <Link
+                                href={`/dashboard/sliderAds/${item.id}`}
+                                className="bg-blue-500 rounded-lg text-center py-1 text-white cursor-pointer w-30 hover:bg-blue-700"
+                            >ویرایش تبلیغ</Link>
+
+                            <button onClick={async () => await removeAction(item.id)} className="bg-blue-500 rounded-md text-white hover:bg-blue-700 px-2 py-1 cursor-pointer">حذف تبلیغ</button>
+                        </div>
+                    </div>
+
                 </div>
             ))}
             <button className="bg-blue-500 rounded-md text-white hover:bg-blue-700 px-2 py-1 cursor-pointer my-5 w-40" onClick={() => router.push("/dashboard/sliderAds/addSlider")}>ایجاد تبلیغ جدید</button>

@@ -39,15 +39,15 @@ export default function Topbar() {
                     <header className="bg-blue-500 px-5 md:px-10 lg:px-20 h-20 flex text-white items-center mb-5 justify-between">
                         <div className="flex h-10 items-center">
                             <button onClick={mobile} className="sm:hidden ml-10"><Image alt="menu" width={30} height={30} src={menuMobile} /></button>
-                            <Link className="ml-10 hidden sm:flex" href={"/dashboard/overview"}>{user}</Link>
+                            <Link className="ml-10 hidden sm:flex" href={"/dashboard/setting"}>{user}</Link>
                             <button type="button" className="cursor-pointer ml-10 hidden sm:flex" onClick={logout}>خروج</button>
                             
                         </div>
                         
                     </header>
                     {open &&
-                        <div className={`bg-blue-500 h-150 absolute ${open} right-0 top-20 w-50 pt-10 pr-5`}>
-                            <Link onClick={Out} className=" mb-5 block text-white flex flex-row" href={"/dashboard/overview"}><Image className="ml-5" src={User} alt="user" width={20} height={20}/>{user}</Link>
+                        <div className={`bg-blue-500 rounded-b-lg  absolute ${open} right-0 top-20 w-50 pt-10 pr-5`}>
+                            <Link onClick={Out} className=" mb-5 block text-white flex flex-row" href={"/dashboard/setting"}><Image className="ml-5" src={User} alt="user" width={20} height={20}/>{user}</Link>
                             <Sidebar click={Out}/> 
                             <button  type="button" className=" mb-5 text-white flex flex-row" onClick={logOut}> <Image className="ml-5" src={Exit} alt="user" width={20} height={20}/>خروج</button>
                         </div>
@@ -64,7 +64,7 @@ export default function Topbar() {
                         </div>
                     </header>
                     {open &&
-                        <div className={`bg-blue-500 h-150 absolute ${open} right-0 top-20 w-40 pt-10`}>
+                        <div className={`bg-blue-500 rounded-b-lg absolute ${open} right-0 top-20 w-40 pt-10`}>
                             <Link onClick={Out} className=" block mr-10 mb-5 text-white" href={"/login"}>ورود</Link>
                             
                         </div>

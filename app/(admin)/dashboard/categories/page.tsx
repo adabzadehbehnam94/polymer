@@ -10,8 +10,8 @@ import { ToastContainer } from "react-toastify"
 interface Data {
     name: string,
     id: number,
-    application? : string | null,
-    image? : string | null 
+    application?: string | null,
+    image?: string | null
 }
 
 export default function Categories() {
@@ -33,11 +33,13 @@ export default function Categories() {
         <div>
             {data ?
                 data.map((item: Data) => (
-                    <div className="flex mb-5 justify-between items-center border-b-2 border-gray-300 pb-3 px-2 md:w-100 lg:w-170" key={item.id}>
-                        {item?.image && <Image className="ml-3" src={item.image} alt="categoryImage" width={50} height={50}/>}
-                        <div className="ml-3">{item.name}</div>
-                        {item?.application && <div className="ml-3">{item.application}</div>}
-                        
+                    <div className="flex flex-col md:flex-row mb-5 justify-between md:items-center border-b-2 border-gray-300 pb-3 px-2  lg:w-150" key={item.id}>
+                        <div className="flex flex-col gap-2 md:mb-0 mb-3">
+                            {item?.image && <Image className="ml-3" src={item.image} alt="categoryImage" width={50} height={50} />}
+                            <div className="ml-3">{item.name}</div>
+                            {item?.application && <div className="ml-3">{item.application}</div>}
+
+                        </div>
                         <div>
 
                             <button className="text-white cursor-pointer rounded-md bg-blue-500 hover:bg-blue-700 px-2 py-1 ml-5" onClick={() => router.push(`/dashboard/categories/${item.id}`)}>ویرایش</button>

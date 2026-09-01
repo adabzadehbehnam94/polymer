@@ -27,7 +27,7 @@ export default function AddUser() {
     return (
         <div >
 
-            <form className="flex flex-col w-70 mx-auto sm:mr-5" action={formRegister}>
+            <form className="flex flex-col lg:w-100 mx-auto sm:mr-5" action={formRegister}>
 
                 <label>نام : </label>
                 <input className="border-2 border-gray-300 rounded-md px-2 py-1 my-2" type="text" name="name" />
@@ -37,11 +37,11 @@ export default function AddUser() {
                 <input className="border-2 border-gray-300 rounded-md px-2 py-1 my-2" type="number" name="mobile" />
 
                 <br />
-                <label>آدرس : </label>
+                <label>آدرس (اختیاری) : </label>
                 <textarea name="address" className="border-2 border-gray-300 rounded-md px-2 py-1 my-2 h-50"></textarea>
 
                 <br />
-                <label>ایمیل: </label>
+                <label>ایمیل (اختیاری) :  </label>
                 <input className="border-2 border-gray-300 rounded-md px-2 py-1 my-2" type="text" name="email" />
 
 

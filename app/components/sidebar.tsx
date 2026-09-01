@@ -19,7 +19,7 @@ export default function Sidebar(props : {click?: ()=> void}) {
     
     const path = usePathname()
     return (
-        <section className="flex gap-2 flex-col w-50  sm:border-l-2 sm:border-gray-300">
+        <section className="flex gap-2 text-white sm:text-black flex-col w-50  sm:border-l-2 sm:border-gray-300">
             <Link onClick={props.click} className="flex flex-row mb-5 tex-left w-[fit-content]" href={"/dashboard/categories"}><Image className="ml-3" src={category} alt="icon" width={20} height={20} />دسته بندی ها</Link>
             <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/overview"}><Image className="ml-3" src={Overview} alt="icon" width={20} height={20} />نمای کلی</Link>
             <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/products"}><Image className="ml-3" src={Products} alt="icon" width={20} height={20} />محصولات</Link>

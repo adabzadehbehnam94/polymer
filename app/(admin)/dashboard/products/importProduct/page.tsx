@@ -41,20 +41,20 @@ export default function ImportProduct() {
     fetchData()
   }, [])
   return (
-    <div className="w-60 sm:w-auto">
+    <div>
 
-      <form className=" sm:mr-5 md:mr-0 flex flex-col gap-3 w-120" action={formProduct}>
+      <form className=" sm:mr-5 md:mr-0 flex flex-col gap-3 lg:w-120" action={formProduct}>
         <label >نام محصول :</label>
         <input name="productName" className="border-2 border-gray-300 rounded-md px-2 py-1 " type="text" />
 
         <label >قیمت محصول :</label>
         <input className={`${IransansFaNumber.className} border-2 border-gray-300 rounded-md px-2 py-1 `} name="price" type="number" />
 
-        <div className="flex flex-col md:flex-row items-center">
+        
 
           <label >تصویر محصول :</label>
           <input className={`border-2 border-gray-300 rounded-md px-2 py-1   cursor-pointer`} name="image" type="file" />
-        </div>
+        
 
         <label > برند :</label>
         <input className={`border-2 border-gray-300 rounded-md px-2 py-1  `} name="brand" type="text" />

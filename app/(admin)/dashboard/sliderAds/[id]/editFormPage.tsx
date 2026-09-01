@@ -46,7 +46,7 @@ export default function EditFormPage({ data }: DataType) {
 
     return (
         <div>
-            <form className="flex flex-col gap-3 w-120" action={editAction}>
+            <form className="flex flex-col gap-3 lg:w-120" action={editAction}>
                 <input type="hidden" defaultValue={data.id} name="id" />
                 <input type="hidden" defaultValue={data.logo ?? ""} name="oldLogo" />
                 <input type="hidden" defaultValue={data.background} name="oldBackground" />
@@ -55,14 +55,14 @@ export default function EditFormPage({ data }: DataType) {
                 <label>متن کوتاه (اختیاری) : </label>
                 <input defaultValue={data.subtitle ?? ""} className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" name="subtitle" />
                 <label>تصویر تبلیغ  : </label>
-                <Image src={data.background} alt="background" width={200} height={100} />
+                <Image src={data.background} className="h-30" alt="background" width={200} height={100} />
                 <label>تصویر جدید : </label>
                 <input className="border-2 border-gray-300 rounded-md px-2 py-1 cursor-pointer" type="file" name="background" />
                 
                 {data?.logo &&
                     <>
                         <label>لوگو : </label>
-                        <Image src={data.logo} alt="background" width={100} height={100} />
+                        <Image src={data.logo} className="h-25" alt="background" width={100} height={100} />
                     </>
                 }
                 <label>  لوگو جدید (اختیاری) : </label>

@@ -26,15 +26,15 @@ export default async function Product({ params }: ParamsId) {
     
 
     return (
-        <div className="flex flex-col lg:flex-row lg:gap-5 ">
-            <Image className="rounded-md mx-auto lg:mx-5 mb-5 lg:mb-0" src={productData.image} alt={"productImage"} width={300} height={500} />
+        <div className="flex flex-col lg:flex-row lg:gap-5 items-center ">
+            <Image className="rounded-md mx-auto lg:mx-5 mb-5 lg:mb-0 w-[auto] h-60" src={productData.image} alt={"productImage"} width={300} height={500} />
             <div>
-                <p className="mb-5">نام کالا : {productData.productName}</p>
-                {productData?.brand && <p className="mb-5"> برند : {productData.brand}</p>}
-                {productData?.application && <p className="mb-5"> کاربرد : {productData.application}</p>}
-                {productData?.details && <p className="mb-5"> شرح کالا : {productData.details}</p>}
-                <p className="mb-5"> دسته بندی : {productData.category?.name}</p>
-                <p className="mb-5"> قیمت : {productData.price.toLocaleString("fa-IR")} ریال</p>
+                <p className="mb-5"><span className="text-blue-500">نام کالا :</span> {productData.productName}</p>
+                {productData?.brand && <p className="mb-5"><span className="text-blue-500">برند : </span>{productData.brand}</p>}
+                {productData?.application && <p className="mb-5"><span className="text-blue-500">کاربرد : </span>{productData.application}</p>}
+                {productData?.details && <p className="mb-5"><span className="text-blue-500">شرح کالا : </span>{productData.details}</p>}
+                <p className="mb-5"><span className="text-blue-500">دسته بندی : </span>{productData.category?.name}</p>
+                <p className="mb-5"><span className="text-blue-500">قیمت : </span>{productData.price.toLocaleString("fa-IR")} ریال</p>
                 <div className="flex">
                     <RemoveButton id={Number(id)} />
                     <Link href={`/dashboard/products/${id}/editProduct`} className="bg-blue-500 rounded-md px-2 py-1 text-white hover:bg-blue-700">ویرایش کالا</Link>

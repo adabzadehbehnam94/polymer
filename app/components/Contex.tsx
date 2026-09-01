@@ -1,6 +1,6 @@
 "use client"
 import { createContext, useEffect, useState } from "react"
-import { allCategories, buyProduct,logoutUser,presentSetting, presentUser, removeProduct, removeUser } from "./serverAction"
+import { allCategories,logoutUser,presentSetting, presentUser, removeProduct, removeUser } from "./serverAction"
 import { useRouter } from "next/navigation"
 
 interface User{
@@ -21,7 +21,6 @@ export interface VAl  {
     Remove : (id : number)=> void,
     category : {category : string} | null,
     id : string | undefined | null,
-    buy : (id : {id : string},products : any )=> void,
     RemoveProduct : (id : number)=> void,
     web : WebDetail | null,
     loginUser : any | null,
@@ -86,10 +85,7 @@ export function Contex({children , initialUser} : contextProps){
         router.push("/dashboard/products")
     }
 
-    const buy = (id : {id : string},products : any)=>{
-        buyProduct(id , products)
-        router.push("/")
-    }
+   
 
     const loginUser = (user : string , id :string)=>{
         setuser(user)
@@ -97,7 +93,7 @@ export function Contex({children , initialUser} : contextProps){
     }
 
     return(
-        <ContextUser.Provider value={{user , handleUser ,logout , Remove , category,id,buy,RemoveProduct ,web , loginUser ,categoryFooter}}>
+        <ContextUser.Provider value={{user , handleUser ,logout , Remove , category,id,RemoveProduct ,web , loginUser ,categoryFooter}}>
             {children}
         </ContextUser.Provider>
     )

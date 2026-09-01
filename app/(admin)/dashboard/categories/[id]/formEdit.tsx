@@ -32,7 +32,7 @@ export default function FormEdit({ data }: any) {
     }, [state])
     return (
         <>
-            <form className="flex flex-col w-120 gap-3" action={formEdit}>
+            <form className="flex flex-col md:w-120 gap-3" action={formEdit}>
                 <input type="hidden" name="id" defaultValue={data?.id} />
                 <input type="hidden" name="oldImage" defaultValue={data?.image ?? ""} />
                 <label>نام دسته بندی : </label>

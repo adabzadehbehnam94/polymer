@@ -10,7 +10,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <div className=" mt-5 grid md:grid-cols-4 sm:grid-cols-3 lg:grid-cols-6 sm:gap-3 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-4 sm:grid-cols-3 lg:grid-cols-6 sm:gap-3 mb-10 container mx-auto px-5">
         <div className="hidden sm:flex sm:col-span-1 lg:col-span-2 xl:col-span-1">
           <Sidebar />
         </div>

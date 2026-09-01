@@ -39,21 +39,21 @@ export default function EditCustomerForm({ customer }: CustomerDetails) {
 
     return (
         <>
-            <form className="mb-5 flex flex-col w-70 mx-auto md:w-70 md:mr-10 lg:mr-5 " action={EditForm}>
+            <form className="mb-5 flex flex-col w-70 mx-auto md:w-70 md:mr-10 lg:mr-5 gap-5" action={EditForm}>
 
                 <input defaultValue={customer?.id} type="hidden" name="id" />
 
-                <label className="mb-5" >نام : </label>
+                <label>نام : </label>
 
-                <input className="mb-5 border-2 rounded-md border-gray-300 px-2 py-1" type="text" defaultValue={customer?.name} name="name" />
+                <input className="border-2 rounded-md border-gray-300 px-2 py-1" type="text" defaultValue={customer?.name} name="name" />
 
-                <label className="mb-5" > شماره موبایل : </label>
-                <input className="mb-5 border-2 rounded-md border-gray-300 px-2 py-1" type="number" defaultValue={customer?.mobile} name="mobile" />
+                <label> شماره موبایل : </label>
+                <input className="border-2 rounded-md border-gray-300 px-2 py-1" type="number" defaultValue={customer?.mobile} name="mobile" />
 
                 {customer?.email &&
                     <>
-                        <label className="mb-5" >ایمیل : </label>
-                        <input className="mb-5 border-2 rounded-md border-gray-300 px-2 py-1" type="text" defaultValue={customer?.email} name="email" />
+                        <label>ایمیل : </label>
+                        <input className="border-2 rounded-md border-gray-300 px-2 py-1" type="text" defaultValue={customer?.email} name="email" />
                     </>
                 }
 
@@ -61,12 +61,12 @@ export default function EditCustomerForm({ customer }: CustomerDetails) {
                 {customer?.address &&
                     <>
                         <label > آدرس : </label>
-                        <textarea name="address" className="mb-5 border-2 rounded-md border-gray-300 px-2 py-1 h-50" defaultValue={customer?.address}></textarea>
+                        <textarea name="address" className="border-2 rounded-md border-gray-300 px-2 py-1 h-50" defaultValue={customer?.address}></textarea>
                     </>
                 }
 
 
-                <button className="cursor-pointer mb-5 bg-blue-500 rounded-md text-white px-2 py-1 w-30">ثبت ویرایش</button>
+                <button className="cursor-pointer bg-blue-500 rounded-md text-white px-2 py-1 w-30">ثبت ویرایش</button>
 
             </form>
             <ToastContainer />

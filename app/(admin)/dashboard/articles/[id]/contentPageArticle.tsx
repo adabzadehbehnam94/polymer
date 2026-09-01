@@ -69,7 +69,7 @@ export default function ContentPageArticle({ articleData }: { articleData: Artic
     return (
         
         <div>
-            <form className="flex flex-col gap-4" action={createArticle}>
+            <form className="flex flex-col gap-4 lg:w-150" action={createArticle}>
 
                 <input type="hidden" defaultValue={articleData.id} name="id" />
                 <input type="hidden" defaultValue={articleData.image} name="oldImage" />
@@ -91,9 +91,9 @@ export default function ContentPageArticle({ articleData }: { articleData: Artic
                 <textarea defaultValue={articleData.content} name="content" className="border-2 border-gray-300 rounded-md px-2 py-1 my-2 h-50"></textarea>
 
 
-                <div className="flex gap-5">
+                <div className="flex gap-5 items-center">
                     <label>تصویر مقاله: </label>
-                    <Image src={articleData.image} alt="image" width={70} height={40}/>
+                    <Image src={articleData.image} className="h-20 w-[auto]" alt="image" width={200} height={100}/>
                 </div>
 
                 <label>تصویر جدید مقاله: </label>

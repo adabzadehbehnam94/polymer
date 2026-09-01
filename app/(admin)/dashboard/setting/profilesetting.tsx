@@ -1,5 +1,5 @@
 "use client"
-import { editUser } from "@/app/components/serverAction"
+import { editProfile, editUser } from "@/app/components/serverAction"
 import { useRouter } from "next/navigation"
 import { useActionState, useEffect } from "react"
 import { toast, ToastContainer } from "react-toastify"
@@ -9,7 +9,8 @@ import { toast, ToastContainer } from "react-toastify"
 
 interface Admin{
     admin : {
-        id : number
+        id : number,
+        username : string,
         firstname : string,
         lastname : string,
         email? : string | null,
@@ -18,18 +19,18 @@ interface Admin{
 }
 
 export default function ProfileSetting({admin} : Admin){
-    const [state , profileAction] = useActionState(editUser , {})
-    // const router = useRouter()
+    const [state , profileAction] = useActionState(editProfile , {})
+    const router = useRouter()
      useEffect(() => {
-            if (state?.nameErr) {
-                toast.error(state.nameErr)
+            if (state?.usernameErr) {
+                toast.error(state.usernameErr)
             }
-            if (state?.familyErr) {
-                toast.error(state.familyErr)
+            if (state?.firstnameErr) {
+                toast.error(state.firstnameErr)
             }
     
-            if (state?.emailErr) {
-                toast.error(state.emailErr)
+            if (state?.lastnameErr) {
+                toast.error(state.lastnameErr)
             }
             if (state?.passwordErr) {
                 toast.error(state.passwordErr)
@@ -40,17 +41,18 @@ export default function ProfileSetting({admin} : Admin){
             if (state?.editSuccess) {
                 toast.success(state.editSuccess)
             }
-        })
+        },[state])
     return(
         <>
-            <h3 className="mb-5" >تنظیمات پروفایل</h3>
+            <h3 className="mb-5 text-blue-500" >تنظیمات پروفایل</h3>
                 <form className="flex flex-col gap-2 "  action={profileAction}>
-                    <input type="hidden" defaultValue={admin.id} name="id"/>
+                    <label>نام کاربری : </label>
+                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.username} name="username"/>
                     <label>نام : </label>
-                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.firstname} name="firstName"/>
+                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.firstname} name="firstname"/>
                     <br />
                     <label >نام خانوادگی : </label>
-                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.lastname} name="lastName"/>
+                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.lastname} name="lastname"/>
                     <br />
                     <label >ایمیل : </label>
                     <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.email ?? ""} name="email"/>

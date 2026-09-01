@@ -36,7 +36,7 @@ export default function CustomersDetails({ customersData }: Customresdata) {
                     {search === "" && customersData.length === 0 && <p>مشتری وجود ندارد</p>}
                     {search === "" ?
                         customersData?.map((item: { id: number, name: string, address?: string | null , mobile? : string | null}) => (
-                            <Link href={`/dashboard/customers/${item.id}`} className="flex flex-row mb-3 w-[fit-content]" key={item.id}>
+                            <Link href={`/dashboard/customers/${item.id}`} className="flex flex-row mb-3 w-[fit-content] hover:text-blue-500" key={item.id}>
                                 <div className="ml-2">{item.name}</div>
                                 
                             </Link>
@@ -45,7 +45,7 @@ export default function CustomersDetails({ customersData }: Customresdata) {
                         :
 
                         filter?.map((item: { id: number, name: string, address?: string | null , mobile? : string | null}) => (
-                            <Link href={`/dashboard/users/${item.id}`} className="flex flex-row mb-3 w-[fit-content]" key={item.id}>
+                            <Link href={`/dashboard/users/${item.id}`} className="flex flex-row mb-3 w-[fit-content] hover:text-blue-500" key={item.id}>
                                 <div className="ml-2">{item.name}</div>
                                 
                             </Link>

@@ -294,9 +294,8 @@ export async function editUser(state: State, formdata: Formdata): Promise<any> {
     const mobile = formdata.get("mobile")
     const email = formdata.get("email")
     const address = formdata.get("address")
-    // const date = formdata.get("date")
     const id = formdata.get("id")
-    // const category = formdata.get("category")
+    
 
     if (name === "") {
         return {
@@ -331,36 +330,61 @@ export async function editUser(state: State, formdata: Formdata): Promise<any> {
     }
 }
 
+export async function editProfile(state: State, formdata: Formdata): Promise<any> {
+    const username = formdata.get("username")
+    const firstname = formdata.get("firstname")
+    const lastname = formdata.get("lastname")
+    const email = formdata.get("email")
+    const password = formdata.get("password")
+    
 
-export async function buyProduct(id: { id: string }, products: any) {
-    const oldOrders = await fetch(`http://localhost:3001/users/${id}`, {
-        method: "GET",
-        cache: "no-store"
-    })
+    if (typeof(username) !== "string" || username.trim() === "") {
+        return {
+            usernameErr: " نام کاربری نباید خالی باشد"
+        }
+    }
 
-    const oldData = await oldOrders.json()
+    if (typeof(firstname) !== "string" || firstname.trim() === "") {
+        return {
+            firstnameErr: "فیلد نام  نباید خالی باشد"
+        }
+    }
 
-    if (oldData?.orders) {
-        const fetchdata = await fetch(`http://localhost:3001/users/${id}`, {
-            method: "PATCH",
-            cache: "no-store",
-            body: JSON.stringify({
-                orders: [...oldData?.orders, ...products]
-            })
-        })
-    } else {
-
-        const fetchdataNew = await fetch(`http://localhost:3001/users/${id}`, {
-            method: "PATCH",
-            cache: "no-store",
-            body: JSON.stringify({
-                orders: [...products]
-            })
-        })
+    if (typeof(lastname) !== "string" || lastname.trim() === "") {
+        return {
+            lastnameErr: "فیلد نام خانوادگی نباید خالی باشد"
+        }
+    }
+    if (typeof(password) !== "string" || password.trim() === "") {
+        return {
+            passwordErr: "رمز عبور نباید خالی باشد"
+        }
     }
 
 
+    const result = await prisma.users.update({
+        where: { id: 1 },
+        data: {
+            username: username,
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            password:password
+        }
+    })
+
+    if (result) {
+        return {
+            editSuccess: "تغییرات با موفقیت اعمال شد"
+        }
+    } else {
+        return {
+            editError: "تغییرات انجام نشد"
+        }
+    }
 }
+
+
 
 export async function editProduct(state: StateProduct, formdata: Formdata): Promise<any> {
     const productName = formdata.get("producName")
@@ -680,6 +704,7 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
     const address = formdata.get("address")
     const phone = formdata.get("phone")
     const email = formdata.get("email")
+    const workingHours = formdata.get("workingHours")
 
     if (logo === null) {
         return {
@@ -732,7 +757,8 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
             detail: detail,
             phone: phone,
             email: email,
-            address: address
+            address: address,
+            workingHours:workingHours
         }
     })
 

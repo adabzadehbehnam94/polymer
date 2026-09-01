@@ -22,11 +22,10 @@ export default async function Setting() {
     
     const web = await prisma.setting.findUnique({where : {id : 1}})
     const userProfile = await prisma.users.findUnique({where : {id : 1}})
-    // console.log(typeof(user?.value));
     
     
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-8">
             <div>
                 <ProfileSetting admin={userProfile!}/>
             </div>
