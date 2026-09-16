@@ -14,7 +14,7 @@ interface ProductsType {
     brand?: string | null,
     application?: string | null,
     details?: string | null,
-    price: number,
+    price: string,
     categoryId: number,
     createdAt: any,
     category? : {name : string}
