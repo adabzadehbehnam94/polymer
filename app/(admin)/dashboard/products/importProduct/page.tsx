@@ -54,14 +54,17 @@ export default function ImportProduct() {
 
           <label >تصویر محصول :</label>
           <input className={`border-2 border-gray-300 rounded-md px-2 py-1   cursor-pointer`} name="image" type="file" />
+
+          <label >ویدئو محصول (اختیاری):</label>
+          <input className={`border-2 border-gray-300 rounded-md px-2 py-1   cursor-pointer`} name="video" type="file" />
         
 
-        <label > برند :</label>
+        <label > برند (اختیاری):</label>
         <input className={`border-2 border-gray-300 rounded-md px-2 py-1  `} name="brand" type="text" />
-        <label > کاربرد :</label>
+        <label > کاربرد (اختیاری):</label>
         <input className={`border-2 border-gray-300 rounded-md px-2 py-1  `} name="application" type="text" />
         
-        <label>شرح محصول :</label>
+        <label>شرح محصول (اختیاری):</label>
         
         <textarea className="border-2 border-gray-300 rounded-md px-2 py-1 " name="details" cols={30} rows={10}></textarea>
 

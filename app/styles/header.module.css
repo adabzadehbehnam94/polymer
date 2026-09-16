@@ -27,13 +27,13 @@
     .mobile_menu {
         flex-direction: column;
         position: fixed;
-        top: 0;
+        top: 55;
         /* left: 20p; */
-        background-color: black;
-        width: 200px;
-        align-items: start;
+        background-color: #121619;
+        width: 100%;
+        align-items: end;
         padding: 20px;
-        border-radius: 20px;
+        border-radius: 0 0 20px 20px;
         transition: all .5s;
     }
 

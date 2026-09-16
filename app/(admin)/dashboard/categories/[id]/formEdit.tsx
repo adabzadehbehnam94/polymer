@@ -35,6 +35,7 @@ export default function FormEdit({ data }: any) {
             <form className="flex flex-col md:w-120 gap-3" action={formEdit}>
                 <input type="hidden" name="id" defaultValue={data?.id} />
                 <input type="hidden" name="oldImage" defaultValue={data?.image ?? ""} />
+                <input type="hidden" name="oldImagePublicId" defaultValue={data?.imagePublicId ?? ""} />
                 <label>نام دسته بندی : </label>
                 <input className="border-2 rounded-md border-gray-300  px-2 py-1" defaultValue={data?.name} type="text" name="name" />
                 <label> کاربرد : </label>

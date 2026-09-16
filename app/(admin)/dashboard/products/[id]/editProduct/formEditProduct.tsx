@@ -58,6 +58,11 @@ export default function Form({ product, category }: FormDetail) {
             <form className="flex flex-col justify-start pb-5 md:w-120 gap-3" action={EditFormdata}>
                 <input type="hidden" name="id" defaultValue={product.id} />
                 <input type="hidden" name="oldImage" defaultValue={product.image} />
+                <input type="hidden" name="oldImagePublicId" defaultValue={product.imagePublicId} />
+                <input type="hidden" name="oldVideo" defaultValue={product.video ?? ""} />
+                <input type="hidden" name="oldVideoPublicId" defaultValue={product.videoPublicId ?? ""} />
+
+
                 <label >نام کالا : </label>
                 <input className=" border-2 border-gray-300 rounded-md px-2 py-1" defaultValue={product.productName} type="text" name="producName" />
                 <label >شرح کالا : </label>
@@ -67,10 +72,23 @@ export default function Form({ product, category }: FormDetail) {
                     <label>تصویر کالا : </label>
                     <Image className="w-[auto] h-30" src={`${product.image}`} alt="imageProduct" width={200} height={100} />
                 </div>
-                
-                    <label>تصویر جدید : </label>
-                    <input className=" border-2 border-gray-300 rounded-md px-2 py-1" type="file" name="image" />
-                
+
+                <label>تصویر جدید : </label>
+                <input className=" border-2 border-gray-300 rounded-md px-2 py-1" type="file" name="image" />
+
+
+                {product?.video &&
+                    <div className="flex gap-5 items-center">
+                        <label>ویدئو محصول : </label>
+                        <video className="w-[auto] h-30" poster={product.image} controls>
+                            <source src={product.video} />
+                        </video>
+                    </div>
+                }
+
+                <label>ویدئو جدید : </label>
+                <input className=" border-2 border-gray-300 rounded-md px-2 py-1" type="file" name="video" />
+
 
                 <label >دسته بندی : </label>
                 <select className="w-40 mb-3 bg-blue-500 rounded-md text-white px-2 py-1" name="category" defaultValue={selectedItem} onChange={e => setSelectedItem(Number(e.target.value))}>

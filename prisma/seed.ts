@@ -30,23 +30,27 @@ async function initialData() {
                 {
                     name : "پلی اتیلن (PE)",
                     application : "انعتاف پذیر , مقاوم و قابل بازیافت",
-                    image : "https://res.cloudinary.com/dpzexj11p/image/upload/v1783612916/pe_ctzk4l.png"
+                    image : "https://res.cloudinary.com/dpzexj11p/image/upload/v1783612916/pe_ctzk4l.png",
+                    imagePublicId: "pe_ctzk4l"
                     
                 },
                 {
                     name : "پلی پروپیلن (PP)",
                     application : "مقاوم , سبک و مناسب برای بسیاری از کاربرد ها",
-                    image : "https://res.cloudinary.com/dpzexj11p/image/upload/v1783612916/pp_xvlu9e.png"
+                    image : "https://res.cloudinary.com/dpzexj11p/image/upload/v1783612916/pp_xvlu9e.png",
+                    imagePublicId: "pp_xvlu9e"
                 },
                 {
                     name : "PVC",
                     application : "پلیمر پرکاربرد در صنایع ساختمانی و صنعتی",
-                    image : "https://res.cloudinary.com/dpzexj11p/image/upload/v1783612917/pvc_su7wtg.png"
+                    image : "https://res.cloudinary.com/dpzexj11p/image/upload/v1783612917/pvc_su7wtg.png",
+                    imagePublicId: "pvc_su7wtg"
                 },
                 {
                     name : "ABS",
                     application : "پلیمر مهندسی با مقاومت بالا و کاربرد گسترده",
-                    image : "https://res.cloudinary.com/dpzexj11p/image/upload/v1783612917/abs_qwpoup.png"
+                    image : "https://res.cloudinary.com/dpzexj11p/image/upload/v1783612917/abs_qwpoup.png",
+                    imagePublicId: "abs_qwpoup"
                 }
             ]
         })
@@ -57,7 +61,8 @@ async function initialData() {
         await prisma.setting.create({
             data :{
                 name : "شرکت پلیمر یاوری",
-                logo : "https://res.cloudinary.com/dpzexj11p/image/upload/v1783240875/logo/vpwtfxbkakf8mwserijn.png",
+                logo : "https://res.cloudinary.com/dpzexj11p/image/upload/v1787322142/logo/jjt63zgqcuuwjadwaj13.png",
+                logoPublicId :"logo/jjt63zgqcuuwjadwaj13",
                 address : "تهران , شورآباد ,خیابان شهید مدنی",
                 phone : "09198282713",
                 detail : "تولید مواد گرانول و آسیابی"

@@ -26,10 +26,13 @@ model Products {
   id Int @id @default(autoincrement())
   productName String
   image String
+  imagePublicId String
+  video String?
+  videoPublicId String?
   brand String?
   application String?
   details String?
-  price Int
+  price String
   categoryId Int
   createdAt DateTime @default(now())
   category Categories @relation(fields : [categoryId] , references : [id])
@@ -40,6 +43,7 @@ model Categories{
   name String
   application String?
   image String?
+  imagePublicId String?
   products Products[]
 
 }
@@ -49,6 +53,7 @@ model Setting {
   name String
   detail String?
   logo String
+  logoPublicId String
   address String
   phone String
   email String?
@@ -84,6 +89,7 @@ model Articles{
   summary String?
   content String @db.LongText
   image  String
+  imagePublicId String
   author String?
   isPublished Boolean @default(false)
   createdAt DateTime @default(now())
@@ -98,6 +104,8 @@ model SliderAds {
   title String
   subtitle String?
   background String
+  backgroundPublicId String
   logo String?
+  logoPublicId String?
 }
 

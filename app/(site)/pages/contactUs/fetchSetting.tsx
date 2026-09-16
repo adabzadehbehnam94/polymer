@@ -115,7 +115,7 @@ export default function FetchSetting({ settingData }: { settingData: SettingType
                     <div className=" bg-[#0a1819] border-1 border-[#172423] rounded-lg px-3 py-2 ">
                         <h3 className="text-lg text-center text-[#fafbf9] my-5 ">ما را دنبال کنید</h3>
                         <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-4 sm:grid-cols-6 grid-cols-4 justify-center md:gap-3 gap-5 mb-5 text-[#b4d860] ">
-                            <Link className="w-[fit-content] bg-[#1e3712] rounded-[50%] px-3 py-3" href={"@mohsenyavary.com"}><FaWhatsapp size={25} /></Link>
+                            <Link className="w-[fit-content] bg-[#1e3712] rounded-[50%] px-3 py-3 justify-center" href={"@mohsenyavary.com"}><FaWhatsapp size={25} /></Link>
                             <Link className="w-[fit-content] bg-[#1e3712] rounded-[50%] px-3 py-3" href={"@mohsenyavary.com"}><FaTelegramPlane size={25} /></Link>
                             <Link className="w-[fit-content] bg-[#1e3712] rounded-[50%] px-3 py-3" href={"@mohsenyavary.com"}><FaInstagram size={25} /></Link>
                             <Link className="w-[fit-content] bg-[#1e3712] rounded-[50%] px-3 py-3" href={"@mohsenyavary.com"}><Image src={eitaa} width={25} height={20} alt="eitaa" /></Link>

@@ -28,7 +28,7 @@ export default async function Home() {
       <section className="container mx-auto px-3 md:px-5">
         {slider.length > 0 && <Slider sliderData={slider} />}
       </section>
-      <section className="bg-black">
+      <section className="bg-[#091011]">
         <div className="py-5 text-white flex justify-center items-center">
           <Image className="ml-2" src={leaf2} width={25} height={25} alt="barg" />
           <h3>دسته بندی محصولات</h3>

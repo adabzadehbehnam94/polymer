@@ -182,14 +182,14 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
 export const presentUser = async (): Promise<{ user?: string, cookieError?: string, id?: string, name?: string }> => {
     const cookie = await cookies()
     const name = cookie.get("name")
-    
+
     const user: any = cookie.get("user")
 
 
     if (name) {
         return {
             user: name.value,
-            
+
             id: user.value
         }
     } else {
@@ -208,12 +208,15 @@ export const logoutUser = async () => {
 
 export async function productAction(state: productsType, formdata: Formdata): Promise<any> {
     const productName = formdata.get("productName")
-    const price = parseInt(formdata.get("price"))
+    const price = formdata.get("price")
     const image = formdata.get("image") as File
+    const video = formdata.get("video") as File
     const categoryId = formdata.get("categoryId")
     const details = formdata.get("details")
     const brand = formdata.get("brand")
     const application = formdata.get("application")
+    let videoUrl
+    let videoPublicId
 
     if (productName === "") {
         return {
@@ -260,13 +263,56 @@ export async function productAction(state: productsType, formdata: Formdata): Pr
             }
         );
 
+    if (video instanceof File && video.size > 0) {
+
+        const bytesVideo = await video.arrayBuffer()
+        const bufferVideo = Buffer.from(bytesVideo)
+
+        const uploadVideo: any =
+            await new Promise(
+                (resolve, reject) => {
+
+                    const stream =
+                        cloudinary.uploader.upload_stream(
+                            {
+                                folder: "products",
+
+                                resource_type: "video"
+                            },
+
+                            (error, result) => {
+
+                                if (error)
+                                    reject(error);
+
+                                else
+                                    resolve(result);
+                            }
+                        );
+
+                    stream.end(bufferVideo);
+                }
+            );
+
+        videoUrl = uploadVideo.secure_url
+        videoPublicId = uploadVideo.public_id
+    } else {
+        videoUrl = null
+        videoPublicId = null
+    }
+
+
+
     const result = await prisma.products.create({
         data: {
             productName: productName,
-            price: Number(price),
+            price: price,
             details: details,
             categoryId: Number(categoryId),
             image: uploadImage.secure_url,
+            imagePublicId: uploadImage.public_id,
+            video: videoUrl,
+            videoPublicId: videoPublicId,
             brand: brand,
             application: application
 
@@ -295,7 +341,7 @@ export async function editUser(state: State, formdata: Formdata): Promise<any> {
     const email = formdata.get("email")
     const address = formdata.get("address")
     const id = formdata.get("id")
-    
+
 
     if (name === "") {
         return {
@@ -336,26 +382,26 @@ export async function editProfile(state: State, formdata: Formdata): Promise<any
     const lastname = formdata.get("lastname")
     const email = formdata.get("email")
     const password = formdata.get("password")
-    
 
-    if (typeof(username) !== "string" || username.trim() === "") {
+
+    if (typeof (username) !== "string" || username.trim() === "") {
         return {
             usernameErr: " نام کاربری نباید خالی باشد"
         }
     }
 
-    if (typeof(firstname) !== "string" || firstname.trim() === "") {
+    if (typeof (firstname) !== "string" || firstname.trim() === "") {
         return {
             firstnameErr: "فیلد نام  نباید خالی باشد"
         }
     }
 
-    if (typeof(lastname) !== "string" || lastname.trim() === "") {
+    if (typeof (lastname) !== "string" || lastname.trim() === "") {
         return {
             lastnameErr: "فیلد نام خانوادگی نباید خالی باشد"
         }
     }
-    if (typeof(password) !== "string" || password.trim() === "") {
+    if (typeof (password) !== "string" || password.trim() === "") {
         return {
             passwordErr: "رمز عبور نباید خالی باشد"
         }
@@ -369,7 +415,7 @@ export async function editProfile(state: State, formdata: Formdata): Promise<any
             firstname: firstname,
             lastname: lastname,
             email: email,
-            password:password
+            password: password
         }
     })
 
@@ -388,13 +434,20 @@ export async function editProfile(state: State, formdata: Formdata): Promise<any
 
 export async function editProduct(state: StateProduct, formdata: Formdata): Promise<any> {
     const productName = formdata.get("producName")
-    const price = Number(formdata.get("price"))
+    const price = formdata.get("price")
     const details = formdata.get("details")
     const id = Number(formdata.get("id"))
     const categoryId = Number(formdata.get("category"))
     const image = formdata.get("image")
+    const video = formdata.get("video")
     const application = formdata.get("application")
     const brand = formdata.get("brand")
+    let imageUrl
+    let imagePublicId
+    let videoUrl
+    let videoPublicId
+
+    const product = await prisma.products.findUnique({ where: { id: id } })
 
     if (productName === "") {
         return {
@@ -407,11 +460,18 @@ export async function editProduct(state: StateProduct, formdata: Formdata): Prom
         }
     }
 
-    let imageUrl
+
 
 
 
     if (image instanceof File && image.size > 0) {
+
+
+
+        if (product?.imagePublicId) {
+            await cloudinary.uploader.destroy(product.imagePublicId)
+        }
+
         const byte = await image.arrayBuffer()
         const buffer = Buffer.from(byte)
         const uploadImage: any = await new Promise(
@@ -429,8 +489,42 @@ export async function editProduct(state: StateProduct, formdata: Formdata): Prom
         )
 
         imageUrl = uploadImage.secure_url
+        imagePublicId = uploadImage.public_id
     } else {
         imageUrl = formdata.get("oldImage")
+        imagePublicId = formdata.get("oldImagePublicId")
+    }
+
+    if (video instanceof File && video.size > 0) {
+
+        if (product?.videoPublicId) {
+            await cloudinary.uploader.destroy(product.videoPublicId)
+        }
+
+        const byte = await video.arrayBuffer()
+        const buffer = Buffer.from(byte)
+        const uploadVideo: any = await new Promise(
+            (resolve, reject) => {
+                const stream = cloudinary.uploader.upload_stream(
+                    {
+                        folder: "product",
+                        resource_type: "video"
+                    },
+                    (error, result) => {
+                        if (error) reject(error)
+                        else resolve(result)
+                    }
+                )
+
+                stream.end(buffer)
+            }
+        )
+
+        videoUrl = uploadVideo.secure_url
+        videoPublicId = uploadVideo.public_id
+    } else {
+        videoUrl = formdata.get("oldVideo")
+        videoPublicId = formdata.get("oldVideoPublicId")
     }
 
     const fetchData = await prisma.products.update({
@@ -441,6 +535,9 @@ export async function editProduct(state: StateProduct, formdata: Formdata): Prom
             details: details,
             categoryId: categoryId,
             image: imageUrl,
+            imagePublicId: imagePublicId,
+            video: videoUrl,
+            videoPublicId: videoPublicId,
             application: application,
             brand: brand
         }
@@ -459,6 +556,15 @@ export async function editProduct(state: StateProduct, formdata: Formdata): Prom
 }
 
 export async function removeProduct(id: number | undefined) {
+    const product = await prisma.products.findUnique({ where: { id: id } })
+
+    if (product?.imagePublicId) {
+        await cloudinary.uploader.destroy(product.imagePublicId)
+    }
+
+    if (product?.videoPublicId) {
+        await cloudinary.uploader.destroy(product.videoPublicId)
+    }
     const fetchdata = await prisma.products.delete({ where: { id: id } })
 
     if (fetchdata) {
@@ -509,6 +615,8 @@ export async function categoryAction(state: any, formdata: any): Promise<any> {
     const application = formdata.get("application")
     const image = formdata.get("image")
     let urlImage
+    let urlPublicId
+
 
     if (name === "") {
         return {
@@ -533,15 +641,18 @@ export async function categoryAction(state: any, formdata: any): Promise<any> {
         })
 
         urlImage = uploudImage.secure_url
+        urlPublicId = uploudImage.public_id
     } else {
-        urlImage = ""
+        urlImage = null
+        urlPublicId = null
     }
 
     const data = await prisma.categories.create({
         data: {
             name: name,
             application: application,
-            image: urlImage
+            image: urlImage,
+            imagePublicId: urlPublicId
         }
     })
 
@@ -562,6 +673,8 @@ export async function categoryEditAction(state: any, formdata: any): Promise<any
     const application = formdata.get("application")
     const image = formdata.get("image")
     let urlImage
+    let urlPublicId
+
 
     if (name === "") {
         return {
@@ -570,6 +683,13 @@ export async function categoryEditAction(state: any, formdata: any): Promise<any
     }
 
     if (image instanceof File && image.size > 0) {
+
+        const category = await prisma.categories.findUnique({ where: { id: id } })
+
+        if (category?.imagePublicId) {
+            await cloudinary.uploader.destroy(category.imagePublicId)
+        }
+
         const byte = await image.arrayBuffer()
         const buffer = Buffer.from(byte)
 
@@ -586,8 +706,10 @@ export async function categoryEditAction(state: any, formdata: any): Promise<any
         })
 
         urlImage = uploadImage.secure_url
+        urlPublicId = uploadImage.public_id
     } else {
         urlImage = formdata.get("oldImage")
+        urlPublicId = formdata.get("oldImagePublicId")
     }
 
     const data = await prisma.categories.update({
@@ -595,7 +717,8 @@ export async function categoryEditAction(state: any, formdata: any): Promise<any
         data: {
             name: name,
             application: application,
-            image: urlImage
+            image: urlImage,
+            imagePublicId: urlPublicId
         }
     })
 
@@ -611,6 +734,12 @@ export async function categoryEditAction(state: any, formdata: any): Promise<any
 }
 
 export async function categoryDeleteAction(id: number) {
+
+    const category = await prisma.categories.findUnique({ where: { id: id } })
+
+    if (category?.imagePublicId) {
+        await cloudinary.uploader.destroy(category.imagePublicId)
+    }
 
     const data = await prisma.categories.delete({
         where: { id: Number(id) }
@@ -677,6 +806,7 @@ export async function importWebDetail(state: StateSetting, formdata: Formdata) {
             name: name,
             detail: detail,
             logo: uploadLogo.secure_url,
+            logoPublicId: uploadLogo.public_id,
             email: email,
             address: address,
             phone: phone
@@ -712,7 +842,7 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
         }
     }
 
-    if (typeof name !== "string" ||  name.trim() === "") {
+    if (typeof name !== "string" || name.trim() === "") {
         return {
             webNameErr: "نام شرکت نباید خالی باشد"
         }
@@ -725,8 +855,15 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
     }
 
     let logoUrl
+    let logoPublicId
 
     if (logo instanceof File && logo.size > 0) {
+
+        const logoSetting = await prisma.setting.findUnique({ where: { id: 1 } })
+        if (logoSetting?.logoPublicId) {
+            await cloudinary.uploader.destroy(logoSetting.logoPublicId)
+        }
+
         const bytes = await logo.arrayBuffer()
         const buffer = Buffer.from(bytes)
 
@@ -744,8 +881,10 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
         })
 
         logoUrl = uploadImage.secure_url
+        logoPublicId = uploadImage.public_id
     } else {
         logoUrl = formdata.get("oldLogo")
+        logoPublicId = formdata.get("oldLogoPublicId")
     }
 
 
@@ -753,12 +892,13 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
         where: { id: 1 },
         data: {
             logo: logoUrl,
+            logoPublicId: logoPublicId,
             name: name,
             detail: detail,
             phone: phone,
             email: email,
             address: address,
-            workingHours:workingHours
+            workingHours: workingHours
         }
     })
 
@@ -785,6 +925,7 @@ export async function adsAction(state: SliderState, formdata: Formdata) {
     const background = formdata.get("background")
     const logo = formdata.get("logo")
     let urlLogo
+    let urlLogoPublicId
 
 
     if (typeof title !== "string" || title.trim() === "") {
@@ -836,8 +977,10 @@ export async function adsAction(state: SliderState, formdata: Formdata) {
         })
 
         urlLogo = uploadLogo.secure_url
+        urlLogoPublicId = uploadLogo.public_id
     } else {
         urlLogo = null
+        urlLogoPublicId = null
     }
 
     const data = await prisma.sliderAds.create({
@@ -845,7 +988,9 @@ export async function adsAction(state: SliderState, formdata: Formdata) {
             title: title,
             subtitle: subtitle,
             background: uploadBackground.secure_url,
-            logo: urlLogo
+            backgroundPublicId: uploadBackground.public_id,
+            logo: urlLogo,
+            logoPublicId: urlLogoPublicId
         }
     })
 
@@ -864,6 +1009,15 @@ export async function adsAction(state: SliderState, formdata: Formdata) {
 }
 
 export async function removeAds(id: number) {
+    const adsSlider = await prisma.sliderAds.findUnique({ where: { id: id } })
+    if (adsSlider?.backgroundPublicId) {
+        await cloudinary.uploader.destroy(adsSlider.backgroundPublicId)
+    }
+
+    if (adsSlider?.logoPublicId) {
+        await cloudinary.uploader.destroy(adsSlider.logoPublicId)
+    }
+
     const data = await prisma.sliderAds.delete({ where: { id: id } })
 }
 
@@ -874,7 +1028,10 @@ export async function editAds(state: SliderState, formdata: Formdata) {
     const logo = formdata.get("logo")
     const id = formdata.get("id")
     let urlLogo
+    let urlLogoPublicId
+
     let urlbackground
+    let urlbackgroundPublicId
 
 
     if (typeof title !== "string" || title.trim() === "") {
@@ -888,6 +1045,13 @@ export async function editAds(state: SliderState, formdata: Formdata) {
 
 
     if (background instanceof File && background.size > 0) {
+
+        const slider = await prisma.sliderAds.findUnique({ where: { id: id } })
+
+        if (slider?.backgroundPublicId) {
+            await cloudinary.uploader.destroy(slider.backgroundPublicId)
+        }
+
         const byte = await background.arrayBuffer()
         const buffer = Buffer.from(byte)
 
@@ -904,14 +1068,24 @@ export async function editAds(state: SliderState, formdata: Formdata) {
             stream.end(buffer)
         })
 
+
+
         urlbackground = uploadBackground.secure_url
+        urlbackgroundPublicId = uploadBackground.public_id
     } else {
         urlbackground = formdata.get("oldBackground")
+        urlbackgroundPublicId = formdata.get("oldBackgroundPublicId")
     }
 
 
 
     if (logo instanceof File && logo.size > 0) {
+
+        const slider = await prisma.sliderAds.findUnique({ where: { id: id } })
+
+        if (slider?.logoPublicId) {
+            await cloudinary.uploader.destroy(slider.logoPublicId)
+        }
 
         const byte = await logo.arrayBuffer()
         const buffer = Buffer.from(byte)
@@ -928,9 +1102,13 @@ export async function editAds(state: SliderState, formdata: Formdata) {
             stream.end(buffer)
         })
 
+
+
         urlLogo = uploadLogo.secure_url
+        urlLogoPublicId = uploadLogo.public_id
     } else {
         urlLogo = formdata.get("oldLogo")
+        urlLogoPublicId = formdata.get("oldLogoPblicId")
     }
 
     const data = await prisma.sliderAds.update({
@@ -939,7 +1117,9 @@ export async function editAds(state: SliderState, formdata: Formdata) {
             title: title,
             subtitle: subtitle,
             background: urlbackground,
-            logo: urlLogo
+            backgroundPublicId: urlbackgroundPublicId,
+            logo: urlLogo,
+            logoPublicId: urlLogoPublicId
         }
     })
 
@@ -1012,6 +1192,7 @@ export async function articleAction(state: ArticleState, formdata: Formdata) {
             summary: summary,
             content: content,
             image: uploadImage.secure_url,
+            imagePublicId: uploadImage.public_id,
             author: author,
             slug: slug
         }
@@ -1041,6 +1222,7 @@ export async function articleEdit(state: ArticleState, formdata: Formdata) {
     const content = formdata.get("content")
     const isPublished = formdata.get("isPublished")
     let urlImage
+    let urlPublicId
     let publishedStatus
 
 
@@ -1060,6 +1242,13 @@ export async function articleEdit(state: ArticleState, formdata: Formdata) {
     }
 
     if (image instanceof File && image.size > 0) {
+
+        const article = await prisma.articles.findUnique({ where: { id: id } })
+
+        if (article?.imagePublicId) {
+            await cloudinary.uploader.destroy(article.imagePublicId)
+        }
+
         const byte = await image.arrayBuffer()
         const buffer = Buffer.from(byte)
 
@@ -1077,34 +1266,37 @@ export async function articleEdit(state: ArticleState, formdata: Formdata) {
         })
 
         urlImage = uploadImage.secure_url
-    }else{
+        urlPublicId = uploadImage.public_id
+
+    } else {
         urlImage = formdata.get("oldImage")
+        urlPublicId = formdata.get("oldImagePublicId")
     }
 
-    if(isPublished === "false"){
+    if (isPublished === "false") {
         publishedStatus = false
-    }else{
+    } else {
         publishedStatus = true
     }
 
 
-    const oldData = await prisma.articles.findUnique({where : {id : Number(id)}})
+    const oldData = await prisma.articles.findUnique({ where: { id: Number(id) } })
     const data = await prisma.articles.update({
-        where : {id : Number(id)} ,
+        where: { id: Number(id) },
         data: {
             title: title,
             summary: summary,
             content: content,
             image: urlImage,
+            imagePublicId: urlPublicId,
             author: author,
             slug: slug,
-            isPublished : publishedStatus,
-            publishedAt : !oldData?.publishedAt && isPublished ? new Date() : oldData?.publishedAt
+            isPublished: publishedStatus,
+            publishedAt: !oldData?.publishedAt && isPublished ? new Date() : oldData?.publishedAt
         }
     })
 
-    console.log(data);
-    
+
 
     if (data) {
         return {
@@ -1120,63 +1312,69 @@ export async function articleEdit(state: ArticleState, formdata: Formdata) {
 
 }
 
-export async function articleDelete(id : number) {
-    
+export async function articleDelete(id: number) {
+
+    const article = await prisma.articles.findUnique({ where: { id: id } })
+
+    if (article?.imagePublicId) {
+        await cloudinary.uploader.destroy(article.imagePublicId)
+    }
+
     const data = await prisma.articles.delete({
-        where : {id : id} 
+        where: { id: id }
     })
 
 }
 
-export async function messageAction(state : MessageState, formdata : Formdata) {
+export async function messageAction(state: MessageState, formdata: Formdata) {
     const name = formdata.get("name")
     const phone = formdata.get("phone")
     const email = formdata.get("email")
     const subject = formdata.get("subject")
     const messageText = formdata.get("messageText")
 
-    if(typeof name !== "string" || name.trim() === "" ){
-        return{
+    if (typeof name !== "string" || name.trim() === "") {
+        return {
             ...state,
-            errName : "فیلد نام نباید خالی باشد"
+            errName: "فیلد نام نباید خالی باشد"
         }
     }
 
-    if(typeof phone !== "string" || phone.trim() === "" ){
-        return{
+    if (typeof phone !== "string" || phone.trim() === "") {
+        return {
             ...state,
-            errPhone : "فیلد شماره تماس نباید خالی باشد"
+            errPhone: "فیلد شماره تماس نباید خالی باشد"
         }
     }
 
-    if(typeof messageText !== "string" || messageText.trim() === "" ){
-        return{
+    if (typeof messageText !== "string" || messageText.trim() === "") {
+        return {
             ...state,
-            errMessage : " متن پیام نباید خالی باشد"
+            errMessage: " متن پیام نباید خالی باشد"
         }
     }
 
-    
+
 
     const data = await prisma.messages.create({
-        data : {
-            name : name,
-            phone : phone,
-            email : email,
-            messageSubject : subject,
-            messageText : messageText
+        data: {
+            name: name,
+            phone: phone,
+            email: email,
+            messageSubject: subject,
+            messageText: messageText
         }
     })
 
-    if(data){
+    if (data) {
         return {
             ...state,
-            success : "پیام با موفقیت ارسال شد"
+            success: "پیام با موفقیت ارسال شد"
         }
-    }else{
-        return{
+    } else {
+        return {
             ...state,
-            error : "ارسال پیام با خطا مواجه شد"
+            error: "ارسال پیام با خطا مواجه شد"
         }
     }
 

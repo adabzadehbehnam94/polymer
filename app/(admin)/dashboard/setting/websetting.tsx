@@ -9,6 +9,7 @@ interface Web {
         name: string,
         detail?: string | null,
         logo: string,
+        logoPublicId: string,
         email? : string | null,
         phone : string,
         address : string,
@@ -42,6 +43,7 @@ export default function WebSetting({ webDetail }: Web) {
             <form className="flex flex-col gap-2 mb-5" action={webAcion}>
                 
                 <input type="hidden" defaultValue={webDetail.logo} name="oldLogo" />
+                <input type="hidden" defaultValue={webDetail.logoPublicId} name="oldLogoPublicId" />
                 <label >نام سایت : </label>
                 <input defaultValue={webDetail.name} name="name" className="rounded-md border-gray-300 border-2 px-2 py-1 " type="text" />
                 

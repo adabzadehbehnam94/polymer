@@ -12,7 +12,9 @@ interface DataType {
         title: string,
         subtitle?: string | null,
         background: string,
-        logo?: string | null
+        backgroundPublicId: string,
+        logo?: string | null,
+        logoPublicId?: string | null
     }
 }
 
@@ -48,8 +50,13 @@ export default function EditFormPage({ data }: DataType) {
         <div>
             <form className="flex flex-col gap-3 lg:w-120" action={editAction}>
                 <input type="hidden" defaultValue={data.id} name="id" />
+                
                 <input type="hidden" defaultValue={data.logo ?? ""} name="oldLogo" />
+                <input type="hidden" defaultValue={data.logoPublicId ?? ""} name="oldLogoPblicId" />
                 <input type="hidden" defaultValue={data.background} name="oldBackground" />
+                <input type="hidden" defaultValue={data.backgroundPublicId} name="oldBackgroundPublicId" />
+
+                
                 <label>تیتر اصلی : </label>
                 <input defaultValue={data.title} className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" name="title" />
                 <label>متن کوتاه (اختیاری) : </label>
@@ -58,7 +65,7 @@ export default function EditFormPage({ data }: DataType) {
                 <Image src={data.background} className="h-30" alt="background" width={200} height={100} />
                 <label>تصویر جدید : </label>
                 <input className="border-2 border-gray-300 rounded-md px-2 py-1 cursor-pointer" type="file" name="background" />
-                
+
                 {data?.logo &&
                     <>
                         <label>لوگو : </label>

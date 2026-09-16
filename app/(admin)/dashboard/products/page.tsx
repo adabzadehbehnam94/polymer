@@ -9,16 +9,20 @@ export interface CategoryType {
     name: string,
     application?: string | null,
     image?: string | null,
+    imagePublicId?: string | null
 }
 
 
 export interface productsType {
     id: string | number,
     productName: string,
-    price: number,
+    price: string,
     image: string,
+    imagePublicId: string,
     categoryId?: number,
     brand?: string | null,
+    video?: string | null
+    videoPublicId?: string | null
     application?: string | null,
     details?: string | null,
     category?: CategoryType

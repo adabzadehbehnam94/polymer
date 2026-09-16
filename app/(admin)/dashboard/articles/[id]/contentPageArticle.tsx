@@ -12,6 +12,7 @@ export interface ArticleType {
     slug?: string | null,
     content: string,
     image: string,
+    imagePublicId :string,
     author?: string | null,
     isPublished : boolean
 }
@@ -73,6 +74,7 @@ export default function ContentPageArticle({ articleData }: { articleData: Artic
 
                 <input type="hidden" defaultValue={articleData.id} name="id" />
                 <input type="hidden" defaultValue={articleData.image} name="oldImage" />
+                <input type="hidden" defaultValue={articleData.imagePublicId} name="oldImagePublicId" />
                 
 
 

@@ -7,27 +7,7 @@ import { removeAds } from "@/app/components/serverAction"
 import { toast, ToastContainer } from "react-toastify"
 
 
-// interface SliderItem {
-//     data: [
-//         {
-//             id: number,
-//             title: string,
-//             subtitle?: string | null |undefined,
-//             background: string,
-//             logo?: string | null |undefined
-//         }
-//     ]
-// }
 
-// interface SliderServer {
-//     data: {
-//         id: number,
-//         title: string,
-//         subtitle?: string | null,
-//         background: string,
-//         logo?: string | null
-//     }
-// }
 
 export default async function SliderAds() {
 
