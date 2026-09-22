@@ -59,7 +59,7 @@ export default function Header() {
                         <Link href={"/pages/aboutUs"} className={`${path === "/pages/aboutUs" && styles.border_link}`}>درباره ما</Link>
                         <Link href={"/pages/contactUs"} className={`${path === "/pages/contactUs" && styles.border_link}`}>تماس با ما</Link>
                     </div>
-                    <div className="bg-[#131519] flex flex-col md:hidden w-[100%] overflow-y-scroll h-auto">
+                    <div className="bg-[#131519] flex flex-col md:hidden w-full h-150 overflow-scroll ">
                         <MobileNavigate title="خانه" link="/" image={path === "/" ? home_green : home} click={actMenutest}/>
                         <MobileNavigate title="محصولات" link="/pages/products" image={path === "/pages/products" ? products_green : products} click={actMenutest}/>
                         <MobileNavigate title="خدمات" link="/pages/services" image={path === "/pages/services" ? services_green : services} click={actMenutest}/>
