@@ -21,7 +21,7 @@ export default function Footer(){
         <footer className={`${style.main_footer}`}>
             <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 <section className=" md:pl-2">
-                    {/* <Link href={"/"} className="w-fit block"><Image src={logoFooter} alt="logoFooter" width={120} height={50}/></Link> */}
+                    
                     {web?.logo &&
                         <Link href={"/"} className="w-[auto] block">
                             <Image alt="logo" width={120} height={50} src={web.logo} />
@@ -48,10 +48,7 @@ export default function Footer(){
                 </section>
                 <section className="flex flex-col">
                     <h2>دسته بندی ها</h2>
-                    {/* <Link href={"/"}>پلی اتیلن (PE)</Link>
-                    <Link href={"/"}>پلی پرو بیلن (PP)</Link>
-                    <Link href={"/"}>PVC</Link>
-                    <Link href={"/"}>ABS</Link> */}
+                    
                     {categoryFooter?.map((item : {name : string , id:number})=>(
                         <Link key={item.id} href={`/pages/products?category=${item.id}`}>{item.name}</Link>
                     ))}

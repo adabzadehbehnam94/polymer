@@ -78,10 +78,10 @@ export default function Form({ product, category }: FormDetail) {
 
 
                 {product?.video &&
-                    <div className="flex gap-5 items-center">
+                    <div className="flex flex-col lg:flex-row gap-5 lg:items-center">
                         <label>ویدئو محصول : </label>
-                        <video className="w-[auto] h-30" poster={product.image} controls>
-                            <source src={product.video} />
+                        <video className="w-auto  h-auto"  controls>
+                            <source className="w-[auto]" src={product.video} />
                         </video>
                     </div>
                 }

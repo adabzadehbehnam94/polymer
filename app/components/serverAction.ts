@@ -1046,7 +1046,7 @@ export async function editAds(state: SliderState, formdata: Formdata) {
 
     if (background instanceof File && background.size > 0) {
 
-        const slider = await prisma.sliderAds.findUnique({ where: { id: id } })
+        const slider = await prisma.sliderAds.findUnique({ where: { id: Number(id) } })
 
         if (slider?.backgroundPublicId) {
             await cloudinary.uploader.destroy(slider.backgroundPublicId)
@@ -1081,7 +1081,7 @@ export async function editAds(state: SliderState, formdata: Formdata) {
 
     if (logo instanceof File && logo.size > 0) {
 
-        const slider = await prisma.sliderAds.findUnique({ where: { id: id } })
+        const slider = await prisma.sliderAds.findUnique({ where: { id: Number(id) } })
 
         if (slider?.logoPublicId) {
             await cloudinary.uploader.destroy(slider.logoPublicId)

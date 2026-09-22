@@ -24,7 +24,7 @@ export default async function Home() {
   const slider = await allSliderAds(4)
   const categories = await allCategories(4)
   return (
-    <div className="bg-black">
+    <div className="bg-[#091011]">
       <section className="container mx-auto px-3 md:px-5">
         {slider.length > 0 && <Slider sliderData={slider} />}
       </section>
