@@ -38,7 +38,7 @@ export default async function Product({ params }: ParamsId) {
                 {productData?.video &&
                     <>
                         <p className="text-blue-500 mb-3 rounded-lg">ویدئو محصول : </p>
-                        <video controls className="w-[100%] h-[auto] lg:w-150 my-5">
+                        <video controls className="md:mx-0 mx-auto w-auto h-100 lg:w-150 my-5">
                             <source src={productData.video} />
                         </video>
                     </>

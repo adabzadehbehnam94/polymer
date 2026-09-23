@@ -28,7 +28,7 @@ export default function Sidebar(props : {click?: ()=> void}) {
             <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/articles"}><Image className="ml-3 w-[fit-content]" src={article} alt="icon" width={20} height={20} />مقالات</Link>
             <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/sliderAds"}><Image className="ml-3 w-[fit-content]" src={ads} alt="icon" width={20} height={20} />تبلیغات اسلایدر</Link>
             <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/setting"}><Image className="ml-3 w-[fit-content]" src={Setting} alt="icon" width={20} height={20} />تنضیمات</Link>
-            <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/products/importProduct"}><Image className="ml-3 w-[fit-content]" src={AddProduct} width={20} height={20} alt="image" /> ایجاد محصول جدید</Link>
-            <Link onClick={props.click} className="flex mb-5 w-[fit-content]" href={"/dashboard/customers/addCustomer"}><Image  className="ml-3 w-[fit-content]" src={AddUser} width={20} height={20} alt="image"/>ایجاد مشتری جدید</Link>
+            <Link onClick={props.click} className="flex flex-row mb-5 w-[fit-content]" href={"/dashboard/products/importProduct"}><Image className="ml-3 w-[fit-content] h-[fit-content]" src={AddProduct} width={20} height={20} alt="image" /> ایجاد محصول جدید</Link>
+            <Link onClick={props.click} className="flex mb-5 w-[fit-content]" href={"/dashboard/customers/addCustomer"}><Image  className="ml-3 w-[fit-content] h-[fit-content]" src={AddUser} width={20} height={20} alt="image"/>ایجاد مشتری جدید</Link>
         </section>)
 }

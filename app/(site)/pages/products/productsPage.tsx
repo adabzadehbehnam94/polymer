@@ -66,12 +66,12 @@ export default function ProductsPage({ productsData , categoryData }: { products
                     {
                         productsData.map((item: ProductsType) => (
                             <div className="rounded-lg overflow-hidden bg-[#121919] flex flex-col gap-3" key={item.id}>
-                                <Image src={item.image} width={300} height={200} alt="product"  className=" xl:h-55 lg:h-40 md:h-40"/>
+                                <Image src={item.image} width={300} height={200} alt="product"  className=" h-40 xl:h-55 "/>
                                 <div className="flex flex-col gap-3 px-5 pb-5">
                                     <p className="text-[#dde1de] text-sm">{item.productName}</p>
                                     <p className="text-[#dde1de] text-sm">{item.category?.name}</p>
-                                    {item?.brand && <p className="text-[#909292] text-xs"><span className="text-[#778957]">برند : </span>{item.brand}</p>}
-                                    {item?.application && <p className="text-[#909292] text-xs">کاربرد : {item.application}</p>}
+                                    {item?.brand && <p className="text-[#909292] text-xs"><span className="text-[#5e9620]">برند : </span>{item.brand}</p>}
+                                    {item?.application && <p className="text-[#909292] text-xs"><span className="text-[#5e9620]">کاربرد : </span> {item.application}</p>}
                                     <button onClick={() => router.push(`/pages/products/${item.id}`)} className="rounded-lg text-[#5e9620] border-1 border-[#2d3e20] cursor-pointer text-sm px-2 py-1">مشاهده جزئیات</button>
                                 </div>
                             </div>))

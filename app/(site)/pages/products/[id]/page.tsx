@@ -24,7 +24,7 @@ export default async function ProductPage({ params }: ParamsType) {
                     {product?.video &&
                         <div className="my-5">
                             <p className="text-[#87898f]">ویدئو محصول : </p>
-                            <video controls className="rounded-lg w-[100%] h-[auto] lg:w-150 mt-3">
+                            <video controls className="rounded-lg md:mx-0 mx-auto w-auto h-100 lg:w-150 mt-3">
                                 <source src={product.video} />
                             </video>
                         </div>

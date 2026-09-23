@@ -28,7 +28,7 @@ export default function ImportAds(){
     },[state])
     return(
         <div>
-            <form className="flex flex-col gap-3 w-120" action={slideraction}>
+            <form className="flex flex-col gap-3 md:w-120" action={slideraction}>
                 <label>تیتر اصلی : </label>
                 <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text"  name="title"/>
                 <label>متن کوتاه (اختیاری) : </label>
