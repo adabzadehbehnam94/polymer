@@ -29,12 +29,12 @@ export default function Footer(){
                     }
                     <p>تامین کننده انواع مواد پلیمری با کیفیت , پایدار و قابل اعتماد</p>
                     <div className={`flex justify-between ${style.social_media}`}>
-                        <Link href={"@mohsenyavary.com"}><FaWhatsapp /></Link>
-                        <Link href={"@mohsenyavary.com"}><FaTelegramPlane /></Link>
-                        <Link href={"@mohsenyavary.com"}><FaInstagram /></Link>
-                        <Link href={"@mohsenyavary.com"}><Image src={eitaa} width={20} height={20} alt="eitaa"/></Link>
-                        <Link href={"@mohsenyavary.com"}><Image src={bale} width={20} height={20} alt="bale"/></Link>
-                        <Link href={"@mohsenyavary.com"}><Image src={rubika} width={20} height={20} alt="rubika"/></Link>
+                        <Link href={"https://web.whatsapp.com/"} target="blank"><FaWhatsapp /></Link>
+                        <Link href={"https://web.telegram.org/k/#@mohsenyavari_m"} target="blank"><FaTelegramPlane /></Link>
+                        <Link href={"https://www.instagram.com/yavari_polymer/"} target="blank"><FaInstagram /></Link>
+                        <Link href={"https://web.eitaa.com/"} target="blank"><Image src={eitaa} width={20} height={20} alt="eitaa"/></Link>
+                        <Link href={"https://web.bale.ai/"} target="blank"><Image src={bale} width={20} height={20} alt="bale"/></Link>
+                        <Link href={"https://web.rubika.ir/"} target="blank"><Image src={rubika} width={20} height={20} alt="rubika"/></Link>
                     </div>
                 </section>
                 <section className="flex flex-col lg:mr-5 ">
@@ -66,7 +66,7 @@ export default function Footer(){
                     <p className="flex"><IoLocationOutline />{web?.address}</p>
                 </section>
             </div>
-            <div className="container mx-auto flex justify-center items-center gap-2 ">
+            <div className="container mx-auto flex flex-col md:flex-row justify-center items-center gap-2 ">
                <p>تمامی حقوق این وب سایت متعلق به شرکت پلیمر یاوری می باشد . </p>
                <p className="flex gap-2"><FaRegCopyright />1405</p>
             </div>

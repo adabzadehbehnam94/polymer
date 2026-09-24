@@ -42,7 +42,7 @@ export default function Header() {
     }
     return (
         <header className={`bg-[#111619] md:bg-[#08100e] md:border-b-1 border-[#1b2620] text-white main-header h-15 items-center flex sticky top-0 ${styles.mainHeader}`}>
-            <div className="container mx-auto grid grid-cols-2 md:grid-cols-3 px-3 sm:px-5 md:px-0">
+            <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 px-3 sm:px-5 md:px-0">
                 <div className="flex justify-end items-center md:justify-center order-last md:order-first">
                     {web?.logo &&
                         <Link href={"/"} className="w-[auto]">
@@ -50,7 +50,7 @@ export default function Header() {
                         </Link>
                     }
                 </div>
-                <div className={`${styles.mobile_menu} ${actMenu} flex  items-center`} >
+                <div className={`${styles.mobile_menu} ${actMenu} flex md:col-span-2 lg:col-span-1  items-center`} >
                     <div className="hidden md:flex items-center w-[100%]  justify-between">
                         <Link href={"/"} className={`${path === "/" && styles.border_link}`}>خانه</Link>
                         <Link href={"/pages/products"} className={`${path === "/pages/products" && styles.border_link}`}>محصولات</Link>
@@ -75,22 +75,22 @@ export default function Header() {
                                 <Image className="h-[fit-content]" src={headphone} alt="headphone" width={40} height={40}/>
                             </div>
                             <div className="grid grid-cols-3 p-5 gap-5">
-                                <Link href={"/"} className="flex justify-center w-20 h-20 items-center rounded-[50%] border-1 border-[#2d3f1c]">
+                                <Link href={"https://web.whatsapp.com/"} target="blank" className="flex justify-center w-20 h-20 items-center rounded-[50%] border-1 border-[#2d3f1c]">
                                     <FaWhatsapp  size={40} color="#88898f"/>
                                 </Link>
-                                <Link href={"/"} className="flex justify-center w-20 h-20 items-center rounded-[50%] border-1 border-[#2d3f1c]">
+                                <Link href={"https://www.instagram.com/yavari_polymer/"} target="blank" className="flex justify-center w-20 h-20 items-center rounded-[50%] border-1 border-[#2d3f1c]">
                                     <FaInstagram  size={40}  color="#88898f"/>
                                 </Link>
-                                <Link href={"/"} className="flex justify-center w-20 h-20 items-center rounded-[50%] border-1 border-[#2d3f1c]">
+                                <Link href={"https://web.telegram.org/k/#@mohsenyavari_m"} target="blank" className="flex justify-center w-20 h-20 items-center rounded-[50%] border-1 border-[#2d3f1c]">
                                     <FaTelegramPlane  size={40}  color="#88898f"/>
                                 </Link>
-                                <Link href={"/"} className="flex justify-center w-20 h-20  items-center rounded-[50%] border-1 border-[#2d3f1c]">
+                                <Link href={"https://web.eitaa.com/"} target="blank" className="flex justify-center w-20 h-20  items-center rounded-[50%] border-1 border-[#2d3f1c]">
                                     <Image src={eitaa} width={35} height={35} alt="eitaa"/>
                                 </Link>
-                                <Link href={"/"} className="flex justify-center w-20 h-20 items-center rounded-[50%] border-1 border-[#2d3f1c]">
+                                <Link href={"https://web.bale.ai/"} target="blank" className="flex justify-center w-20 h-20 items-center rounded-[50%] border-1 border-[#2d3f1c]">
                                     <Image src={bale} width={35} height={35} alt="bale"/>
                                 </Link>
-                                <Link href={"/"} className="flex justify-center w-20 h-20 items-center rounded-[50%] border-1 border-[#2d3f1c]">
+                                <Link href={"https://web.rubika.ir/"} target="blank" className="flex justify-center w-20 h-20 items-center rounded-[50%] border-1 border-[#2d3f1c]">
                                     <Image src={rubika} width={35} height={35} alt="rubika"/>
                                 </Link>
                             </div>
