@@ -19,7 +19,7 @@ export default function HeaderPages({ title, subtitle, icon , summary }: HeaderT
                 { backgroundImage: path === "/pages/aboutUs" ? "url('/images/pictures/aboutPageHeader.png')" : "url('/images/pictures/background_header_page.png')" }
             }>
                 
-                <div className="relative mx-5 md:mr-40 mt-15">
+                <div className="relative mx-5 md:mr-20 lg:mr-40 mt-15">
                     <div className="flex  items-center gap-3 mb-3">
                         {icon && <Image src={icon} width={40} height={40} alt="icon" />}
                         <h1 className=" text-[#f5f5f4]  text-4xl">{title}</h1>

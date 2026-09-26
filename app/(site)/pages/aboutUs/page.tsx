@@ -29,19 +29,22 @@ export default function Aboutus() {
                 <AboutUsCard number="+15" text="سال تجربه " text2="درصنعت پلیمر" logo={years} />
             </div>
             <div className="px-5 pb-5">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 py-5 rounded-lg border-2 border-[#10201E]  relative">
-                    <div
-                        className="flex tems-center gap-2 absolute top-0 outline-2 outline-[#0b1113] text-white left-[6%] md:left-[42%] bg-[#0b1113]  rounded-lg">
-                        <span className="w-8 h-8 border-t-3 border-[#10201E] rounded-2xl -rotate-14 -skew-12 ml-5"></span>
+                <div className="flex w-full items-center justify-center gap-3 text-[#f7f7f5]">
+                        <div className="h-px max-w-32 flex-1 bg-[#10201E] sm:max-w-[50%]"></div>
+                        {/* <span className="w-8 h-8 border-t-3 border-[#10201E] rounded-2xl -rotate-14 -skew-12 ml-5"></span> */}
                         <Image className="w-[fit-content] h-[fit-content]" src={leaf} alt="logoSection" width={20} height={20} />
                         <h3 className="text-lg">چرا پلیمر یاوری ؟</h3>
-                        <span className="w-8 h-8 border-t-3 border-[#10201E] rounded-2xl rotate-14 skew-12 mr-5"></span>
+                        {/* <span className="w-8 h-8 border-t-3 border-[#10201E] rounded-2xl rotate-14 skew-12 mr-5"></span> */}
+                        <div className="h-px  flex-1 bg-[#10201E] max-w-[50%]"></div>
+
                     </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 py-5 rounded-b-lg border-b-2 border-l-2 border-r-2 border-[#10201E]  relative">
+                   
                     <AboutUsBottomCard image={headphone} title="پشتیبانی کامل" subtitle="پشتیبانی فنی و خدمات پس از فروش حرفه ای" />
-                    <div className="border-r-2 border-l-2 border-[#10201E]">
+                    <div className="border-r-2 md:border-l-2 border-[#10201E]">
                         <AboutUsBottomCard image={price} title="قیمت رقابتی" subtitle="ارائه محصولات با بهترین قیمت بازار" />
                     </div>
-                    <div className="md:border-l-2 border-[#10201E]">
+                    <div className="lg:border-l-2 border-[#10201E]">
                         <AboutUsBottomCard image={enginery} title="تجربه و تخصص" subtitle="تیم متخصص با سال ها تجربه در صنعت پلیمر" />
                     </div>
                     <div className="border-r-2 md:border-none border-[#10201E]">

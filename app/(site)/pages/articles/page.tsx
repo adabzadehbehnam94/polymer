@@ -32,16 +32,16 @@ export default async function Articles({serachParams} : {serachParams : Promise<
         <div>
             <HeaderPages icon={leaf} title="مقالات" subtitle="دانش و اطلاعت بروز در صنعت پلیمر" />
             <div className="container mx-auto my-10 px-5">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mb-10">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-5 mb-10">
                     {articlesData.map((item: ArticlesType) => (
                         <Link
                             href={`/pages/articles/${item.id}`}
                             className="rounded-lg overflow-hidden bg-[#121919] flex flex-col  gap-3" key={item.id}>
-                            <Image src={item.image} width={300} height={200} alt="product" className="w-[100%] h-[auto] md:h-50" />
+                            <Image src={item.image} width={300} height={200} alt="product" className="h-30 md:h-40 lg:h-50 bg-auto" />
                             <div className="flex flex-col gap-3 px-5 pb-5">
-                                <p className="text-[#dde1de] text-sm">{item.title}</p>
+                                <p className="text-[#dde1de] text-sm md:text-sm/7">{item.title}</p>
 
-                                {item?.summary && <p className="text-[#909292] text-xs">{item.summary}</p>}
+                                {item?.summary && <p className="text-[#909292] text-xs md:text-xs/6 line-clamp-3 text-justify">{item.summary}</p>}
                                     {/* <div className="flex justify-between">
                                         <p className="text-[#909292] text-xs">{persianDate(item.publishedAt)}</p>
                                         <p className="text-[#909292] text-xs">زمان مطالعه : {persianDate(item.publishedAt)}</p>
